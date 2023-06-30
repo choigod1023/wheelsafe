@@ -11,13 +11,33 @@
     </script>
     <script type="text/javascript">
         // 1. 파일 로드
-        function load_map() {
+        function getMyGps() {
+            // getMyGps : gps로 사용자의 현재 위치 받아오는 함수, Promise를 리턴하는 방식
 
+            let gpsOptions = {
+                enableHighAccuracy: true,
+                timeout: 5000
+            };
+
+            return new Promise((resolve, rejected) => {
+                navigator.geolocation.getCurrentPosition(resolve, rejected);
+            });
+        }
+
+        async function load_map() {
+            let currentX = 0;
+            let currentY = 0;
+            if (navigator.geolocation) {
+                const position = await getMyGps();
+                currentY =  position.coords.latitude;
+                currentX = position.coords.longitude;
+            }
+            console.log(currentX,currentY)
             let map = new Tmapv3.Map("map_div", {
                 center: new Tmapv3.LatLng(37.519892712436906, 127.02810900563199),
                 width: "100%",
-                height: "400px",
-                zoom: 10
+                height: "1000px",
+                zoom: 9
             })
             // 2. 마커 설정
 
@@ -94,10 +114,17 @@
             var pointArray = [];
 
             // 시작
-            addMarker("llStart", 127.02810900563199, 37.519892712436906, 1);
-            // 도착 
-            addMarker("llEnd", 127.11971717230388, 37.49288934463672, 2);
 
+            start_x = ''
+
+            var startX = 126.998179;
+            var startY = 37.558282;
+            var endX = 127.001093;
+            var endY = 37.558154;
+                addMarker("llStart", startX, startY, 1);
+            // 도착 
+            addMarker("llEnd", endX, endY, 2);
+            addMarker("llCurrent",currentX,currentY,3)
             function addMarker(status, lon, lat, tag) {
                 //출도착경유구분
                 //이미지 파일 변경.
@@ -111,6 +138,10 @@
                         break;
                     case "llEnd":
                         imgURL = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
+                        break;
+                    case "llCurrent":
+                        imgURL =
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Location_dot_blue.svg/15px-Location_dot_blue.svg.png';
                         break;
                     default:
                 };
@@ -138,10 +169,6 @@
 
 
             // 4. 경로탐색 API 사용요청
-            var startX = 127.02810900563199;
-            var startY = 37.519892712436906;
-            var endX = 127.11971717230388;
-            var endY = 37.49288934463672;
             // var passList = "127.07389565460413,37.5591696189164_127.13346617572014,37.52127761904626";
             var prtcl;
             var headers = {};
@@ -154,15 +181,15 @@
                 data: {
                     startX: startX,
                     startY: startY,
-                    startName :"시작점",
-                    endName : "끝점",
+                    startName: "시작점",
+                    endName: "끝점",
                     endX: endX,
                     endY: endY,
                     // passList: passList,
                     reqCoordType: "WGS84GEO",
                     resCoordType: "WGS84GEO",
                     angle: "172",
-                    searchOption: "30",
+                    searchOption: "0",
                     trafficInfo: "Y"
                 },
                 success: function (response) {
@@ -187,7 +214,31 @@
                         title: "this is a red line"
                     };
                     drawData(prtcl);
-
+                    // 6. 경로탐색 결과 반경만큼 지도 레벨 조정
+                    var newData = geoData[0];
+                    PTbounds = new Tmapv3.LatLngBounds();
+                    for (var i = 0; i < newData.length; i++) {
+                        var mData = newData[i];
+                        var type = mData.geometry.type;
+                        var pointType = mData.properties.pointType;
+                        console.log(mData.geometry.coordinates)
+                        if (type == "Point") {
+                            var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[1] - 0.005, mData
+                                .geometry
+                                .coordinates[0]);
+                            console.log(linePt);
+                            PTbounds.extend(linePt);
+                        } else {
+                            var startPt, endPt;
+                            for (var j = 0; j < mData.geometry.coordinates.length; j++) {
+                                var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[j][1] - 0.0004,
+                                    mData
+                                        .geometry.coordinates[j][0]);
+                                PTbounds.extend(linePt);
+                            }
+                        }
+                    }
+                    map.fitBounds(PTbounds);
 
                 },
                 error: function (request, status, error) {
