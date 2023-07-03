@@ -10,101 +10,151 @@
 
     </script>
     <script type="text/javascript">
+        let first_loaded = true;
         // 1. 파일 로드
-        function getMyGps() {
-            // getMyGps : gps로 사용자의 현재 위치 받아오는 함수, Promise를 리턴하는 방식
+        // function getMyGps() {
+        //     // getMyGps : gps로 사용자의 현재 위치 받아오는 함수, Promise를 리턴하는 방식
 
-            let gpsOptions = {
-                enableHighAccuracy: true,
-                timeout: 5000
-            };
+        //     let gpsOptions = {
+        //         enableHighAccuracy: true,
+        //         timeout: 5000
+        //     };
 
-            return new Promise((resolve, rejected) => {
-                navigator.geolocation.getCurrentPosition(resolve, rejected);
-            });
-        }
+        //     return new Promise((resolve, rejected) => {
+        //         navigator.geolocation.getCurrentPosition(resolve, rejected);
+        //     });
+        // }
+        async function main() {
+            let start = document.querySelector('#start_select > option:checked').value;
+            let end = document.querySelector('#end_select > option:checked').value;
 
-        async function load_map() {
-            let currentX = 0;
-            let currentY = 0;
-            if (navigator.geolocation) {
-                const position = await getMyGps();
-                currentY =  position.coords.latitude;
-                currentX = position.coords.longitude;
+            let building_coordinates = {
+                new_engineer: {
+                    x: 126.998179,
+                    y: 37.558282
+                },
+                hyehwa: {
+                    x: 127.001753,
+                    y: 37.557555
+                },
+                law: {
+                    x: 127.001093,
+                    y: 37.558154
+                },
+                wonheung: {
+                    x: 126.998996,
+                    y: 37.559003
+                },
+                social: {
+                    x: 127.002617,
+                    y: 37.557358
+                },
+                main_building: {
+                    x: 126.999426,
+                    y: 37.558775
+                },
+                center_library: {
+                    x: 126.999328,
+                    y: 37.557996
+                }
             }
-            console.log(currentX,currentY)
+            console.log(start)
+            await load_map(building_coordinates[start].x, building_coordinates[start].y, building_coordinates[end].x, building_coordinates[end].y);
+        }
+        async function load_map(startX, startY, endX, endY) {
+            // let currentX = 0;
+            // let currentY = 0;
+            // if (navigator.geolocation) {
+            //     const position = await getMyGps();
+            //     currentY = position.coords.latitude;
+            //     currentX = position.coords.longitude;
+            // }
+            // console.log(currentX, currentY)
+            console.log(first_loaded)
+            if (first_loaded) {
+                first_loaded = false;
+            }
+            else {
+                $("#map_div").remove();
+                $('body').append('<div id="map_div"></div>');
+            }
             let map = new Tmapv3.Map("map_div", {
-                center: new Tmapv3.LatLng(37.519892712436906, 127.02810900563199),
+                center: new Tmapv3.LatLng(37.558775, 126.999426),
                 width: "100%",
-                height: "1000px",
-                zoom: 9
+                height: "75%",
+                zoom: 7
             })
+
             // 2. 마커 설정
 
             var new_polyLine = [];
             var new_Click_polyLine = [];
 
             function drawData(data) {
-                // 지도위에 선은 다 지우기
-                routeData = data;
-                var resultStr = "";
-                var distance = 0;
-                var idx = 1;
-                var newData = [];
-                var equalData = [];
-                var pointId1 = "-1234567";
-                var ar_line = [];
+                setTimeout(function () {
+                    routeData = data;
+                    var resultStr = "";
+                    var distance = 0;
+                    var idx = 1;
+                    var newData = [];
+                    var equalData = [];
+                    var pointId1 = "-1234567";
+                    var ar_line = [];
 
-                for (var i = 0; i < data.features.length; i++) {
-                    var feature = data.features[i];
-                    //배열에 경로 좌표 저잘
-                    if (feature.geometry.type == "LineString") {
-                        ar_line = [];
-                        for (var j = 0; j < feature.geometry.coordinates.length; j++) {
-                            var startPt = new Tmapv3.LatLng(feature.geometry.coordinates[j][1], feature.geometry
-                                .coordinates[j][0]);
-                            ar_line.push(startPt);
-                            pointArray.push(feature.geometry.coordinates[j]);
+                    for (var i = 0; i < data.features.length; i++) {
+                        var feature = data.features[i];
+                        //배열에 경로 좌표 저장
+                        if (feature.geometry.type == "LineString") {
+                            ar_line = [];
+                            for (var j = 0; j < feature.geometry.coordinates.length; j++) {
+                                var startPt = new Tmapv3.LatLng(feature.geometry.coordinates[j][1], feature.geometry
+                                    .coordinates[j][0]);
+                                ar_line.push(startPt);
+                                pointArray.push(feature.geometry.coordinates[j]);
+                            }
+                            console.log("hi " + ar_line);
+                            var polyline = new Tmapv3.Polyline({
+                                path: ar_line,
+                                strokeColor: "#ff0000",
+                                strokeWeight: 6,
+                                map: map
+                            });
+                            new_polyLine.push(polyline);
                         }
-                        var polyline = new Tmapv3.Polyline({
-                            path: ar_line,
-                            strokeColor: "#ff0000",
-                            strokeWeight: 6,
-                            map: map
-                        });
-                        new_polyLine.push(polyline);
+                        var pointId2 = feature.properties.viaPointId;
+                        if (pointId1 != pointId2) {
+                            equalData = [];
+                            equalData.push(feature);
+                            newData.push(equalData);
+                            pointId1 = pointId2;
+                        } else {
+                            equalData.push(feature);
+                        }
                     }
-                    var pointId2 = feature.properties.viaPointId;
-                    if (pointId1 != pointId2) {
-                        equalData = [];
-                        equalData.push(feature);
-                        newData.push(equalData);
-                        pointId1 = pointId2;
-                    } else {
-                        equalData.push(feature);
+                    geoData = newData;
+                    var markerCnt = 1;
+                    for (var i = 0; i < newData.length; i++) {
+                        var mData = newData[i];
+                        var type = mData[0].geometry.type;
+                        var pointType = mData[0].properties.pointType;
+                        var pointTypeCheck = false; // 경유지 일때만 true
+                        if (mData[0].properties.pointType == "S") {
+                            var img = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
+                            var lon = mData[0].geometry.coordinates[0];
+                            var lat = mData[0].geometry.coordinates[1];
+                        } else if (mData[0].properties.pointType == "E") {
+                            var img = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
+                            var lon = mData[0].geometry.coordinates[0];
+                            var lat = mData[0].geometry.coordinates[1];
+                        } else {
+                            markerCnt = i;
+                            var lon = mData[0].geometry.coordinates[0];
+                            var lat = mData[0].geometry.coordinates[1];
+                        }
                     }
-                }
-                geoData = newData;
-                var markerCnt = 1;
-                for (var i = 0; i < newData.length; i++) {
-                    var mData = newData[i];
-                    var type = mData[0].geometry.type;
-                    var pointType = mData[0].properties.pointType;
-                    var pointTypeCheck = false; // 경유지 일때만 true
-                    if (mData[0].properties.pointType == "S") {
-                        var img = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
-                        var lon = mData[0].geometry.coordinates[0];
-                        var lat = mData[0].geometry.coordinates[1];
-                    } else if (mData[0].properties.pointType == "E") {
-                        var img = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
-                        var lon = mData[0].geometry.coordinates[0];
-                        var lat = mData[0].geometry.coordinates[1];
-                    } else {
-                        markerCnt = i;
-                        var lon = mData[0].geometry.coordinates[0];
-                        var lat = mData[0].geometry.coordinates[1];
-                    }
-                }
+                }, 1300)
+                // 지도위에 선은 다 지우기
+
             }
 
 
@@ -117,14 +167,10 @@
 
             start_x = ''
 
-            var startX = 126.998179;
-            var startY = 37.558282;
-            var endX = 127.001093;
-            var endY = 37.558154;
-                addMarker("llStart", startX, startY, 1);
+            addMarker("llStart", startX, startY, 1);
             // 도착 
             addMarker("llEnd", endX, endY, 2);
-            addMarker("llCurrent",currentX,currentY,3)
+            // addMarker("llCurrent", currentX, currentY, 3)
             function addMarker(status, lon, lat, tag) {
                 //출도착경유구분
                 //이미지 파일 변경.
@@ -194,7 +240,7 @@
                 },
                 success: function (response) {
                     prtcl = response;
-
+                    console.log("hi " + prtcl);
                     // 5. 경로탐색 결과 Line 그리기 
                     var trafficColors = {
                         extractStyles: true,
@@ -214,31 +260,47 @@
                         title: "this is a red line"
                     };
                     drawData(prtcl);
+
                     // 6. 경로탐색 결과 반경만큼 지도 레벨 조정
-                    var newData = geoData[0];
-                    PTbounds = new Tmapv3.LatLngBounds();
-                    for (var i = 0; i < newData.length; i++) {
-                        var mData = newData[i];
-                        var type = mData.geometry.type;
-                        var pointType = mData.properties.pointType;
-                        console.log(mData.geometry.coordinates)
-                        if (type == "Point") {
-                            var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[1] - 0.005, mData
-                                .geometry
-                                .coordinates[0]);
-                            console.log(linePt);
-                            PTbounds.extend(linePt);
-                        } else {
-                            var startPt, endPt;
-                            for (var j = 0; j < mData.geometry.coordinates.length; j++) {
-                                var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[j][1] - 0.0004,
-                                    mData
-                                        .geometry.coordinates[j][0]);
-                                PTbounds.extend(linePt);
-                            }
+                    setTimeout(async function () {
+                        const campus_center = {
+                            x: 127.0003,
+                            y: 37.5580
                         }
-                    }
-                    map.fitBounds(PTbounds);
+                        const margin = {
+                            left: 20,
+                            top: 500,
+                            right: 0,
+                            bottom: 0
+                        }
+                        var newData = geoData[0];
+                        PTbounds = new Tmapv3.LatLngBounds();
+                        // for (var i = 0; i < newData.length; i++) {
+                        //     var mData = newData[i];
+                        //     var type = mData.geometry.type;
+                        //     var pointType = mData.properties.pointType;
+                        //     console.log(mData.geometry.coordinates)
+                        //     if (type == "Point") {
+                        //         var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[1] - 0.003, mData.geometry.coordinates[0] + 0.001);
+                        //         console.log(linePt);
+                        //         PTbounds.extend(linePt);
+                        //     } else {
+                        //         var startPt, endPt;
+                        //         for (var j = 0; j < mData.geometry.coordinates.length; j++) {
+                        //             var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[j][1] - 0.0004, mData.geometry.coordinates[j][0] + 0.001);
+                        //             PTbounds.extend(linePt);
+                        //         }
+                        //     }
+                        // }
+                        var linePt = new Tmapv3.LatLng(campus_center.y, campus_center.x);
+                        PTbounds.extend(linePt);
+                        await map.fitBounds(PTbounds, margin);
+
+                    }, 1200)
+
+                    setTimeout(async () => {
+                        await map.setZoom(16);
+                    }, 3500)
 
                 },
                 error: function (request, status, error) {
@@ -251,7 +313,79 @@
     </script>
 </head>
 
-<body onload="load_map()">
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 3em;
+    }
+
+    .menu_bar {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu_bar>li {
+        display: inline-block;
+    }
+
+    #search {
+        float: right;
+    }
+
+    .list {
+        float: right;
+    }
+
+    select {
+        width: 20%;
+        height: 3em;
+    }
+
+    select,
+    option {
+        font-size: 15px;
+    }
+</style>
+
+<body onload="">
+    <nav>
+
+        <ul class="menu_bar">
+            <li id="home"><a>WheelSafe</a></li>
+        </ul>
+    </nav>
+    <header>
+        <div class="serach_list">
+            <div id="start">
+
+                <span>출발지</span>
+                <select name="start" id="start_select">
+                    <option value="new_engineer">동국대학교 신공학관</option>
+                    <option value="hyehwa">동국대학교 혜화관</option>
+                    <option value="law">동국대학교 법학관</option>
+                    <option value="wonheung">동국대학교 원흥관</option>
+                    <option value="social">동국대학교 사회과학관</option>
+                    <option value="main_building">동국대학교 본관</option>
+                    <option value="center_library">동국대학교 중앙도서관</option>
+                </select>
+            </div>
+            <div id="end">
+                <span>도착지</span>
+                <select name="end" id="end_select">
+                    <option value="new_engineer">동국대학교 신공학관</option>
+                    <option value="hyehwa">동국대학교 혜화관</option>
+                    <option value="law">동국대학교 법학관</option>
+                    <option value="wonheung">동국대학교 원흥관</option>
+                    <option value="social">동국대학교 사회과학관</option>
+                    <option value="main_building">동국대학교 본관</option>
+                    <option value="center_library">동국대학교 중앙도서관</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="main()">길찾기</button>
+    </header>
     <div id="map_div">
     </div>
 </body>
