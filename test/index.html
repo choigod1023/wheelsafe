@@ -276,9 +276,9 @@
                 console.log(e.message);
             }
 
-            addMarker("llStart", startX, startY, 1);
+            addMarker("llStart", startX, startY, startStr);
             // 도착 
-            addMarker("llEnd", endX, endY, 2);
+            addMarker("llEnd", endX, endY, endStr);
 
             function addMarker(status, lon, lat, tag) {
                 //출도착경유구분
@@ -300,10 +300,11 @@
                         break;
                     default:
                 };
+                console.log(tag);
                 var marker = new Tmapv3.Marker({
                     position: new Tmapv3.LatLng(lat, lon),
                     iconSize: new Tmapv3.Size(15, 15),
-                    iconHTML: `<a href='javascript:alert("안농");'><img src='${imgURL}'></a>`,
+                    iconHTML: `<a><img src='${imgURL}'></a>`,
                     icon: imgURL,
                     map: map
                 });
