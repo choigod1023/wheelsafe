@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+
+
+    // ----- 현재 브라우저에서 API 사용이 유효한가를 검증
+    function availabilityFunc() {
+        //현재 SpeechRecognition을 지원하는 크롬 버전과 webkit 형태로 제공되는 버전이 있으므로 둘 중 해당하는 생성자를 호출한다.
+        recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = "ko"; // 음성인식에 사용되고 반환될 언어를 설정한다.
+        recognition.maxAlternatives = 5; //음성 인식결과를 5개 까지 보여준다.
+
+        if (!recognition) {
+            alert("현재 브라우저는 사용이 불가능합니다.");
+        }
+    }
+
+    // --- 음성녹음을 실행하는 함수
+    function startRecord() {
+        console.log("시작");
+
+        // ⏺️클릭 시 음성인식을 시작한다.
+        recognition.addEventListener("speechstart", () => {
+            console.log("인식");
+        });
+
+        //음성인식이 끝까지 이루어지면 중단된다.
+        recognition.addEventListener("speechend", () => {
+            console.log("인식2");
+        });
+
+        //음성인식 결과를 반환
+        // SpeechRecognitionResult 에 담겨서 반환된다.
+        recognition.addEventListener("result", (e) => {
+            searchConsole.value = e.results[0][0].transcript;
+        });
+
+        recognition.start();
+    }
+    //  🛑 클릭 시 종료(안 눌러도 음성인식은 알아서 종료됨)
+    function endRecord() {
+        console.log("종료");
+        recognition.stop(); // 음성인식을 중단하고 중단까지의 결과를 반환
+    }
+
+    window.addEventListener("load", availabilityFunc);
+
+</script>
+
+<style>
+    * {
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: rgb(47, 23, 144);
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .form {
+        position: absolute;
+        border-radius: 5px;
+        box-shadow: 1px 5px 15px;
+        border: 1px solid black;
+        height: 150px;
+        background-color: rgb(82, 50, 186);
+        width: 700px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #search_console {
+        padding: 18px;
+        width: 300px;
+        margin-right: 10px;
+        border: none;
+        outline-color: rgb(189, 8, 83);
+        box-shadow: 1px 1px 5px black;
+        border-radius: 5px;
+    }
+
+    #search_console:focus {
+        outline: none;
+        border: 2px solid rgb(62, 140, 174);
+    }
+
+    #search_btn {
+        font-size: 18px;
+        border: none;
+        background-color: transparent;
+        height: 38px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px black;
+    }
+
+    #search_btn:hover {
+        background-color: orange;
+        cursor: pointer;
+    }
+
+    .record_btn {
+        padding-left: 5px;
+    }
+
+    .record_btn button {
+        margin: 0;
+        border-radius: 5px;
+        border: none;
+        text-align: center;
+        padding: 5px;
+        font-size: 20px;
+        background-color: transparent;
+        box-shadow: 1px 1px 5px black;
+    }
+
+    button:hover {
+        background-color: orange;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <article class="form">
+        <input type="text" id="search_console" />
+        <button type="button" id="search_btn">🔎</button>
+        <div class="record_btn">
+            <button type="button" onclick="startRecord()">⏺️</button>
+            <button type="button" onclick="endRecord()">🛑</button>
+        </div>
+    </article>
+</body>
+
+</html>
