@@ -1,0 +1,352 @@
+{
+  "new_engineer": {
+    "x": 126.998179,
+    "y": 37.558282,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F167c09f2-ab97-48c2-8656-903c6aef5079%2FIMG_9786.heic?id=18c96793-0ce0-4861-8297-41a9bb3fa2bc&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2",
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4a3ed925-44bc-4973-88a0-63e2f1806602%2FIMG_9787.heic?id=73c452ae-e580-4f82-81be-f1f084faaabc&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "신공학관 엘리베이터",
+    "goto": "left",
+    "info": "1F 식당, ATM, 편의점<br>3F 프린터, 자판기<br>4F 자판기<br>5F 샤워실(남자)<br>7F 샤워실(여자)"
+  },
+  "hyehwa": {
+    "x": 127.001753,
+    "y": 37.557555,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F3ed38451-ec49-4e32-9289-792568d1cc96%2FIMG_9813.heic?id=9a4e6eff-0105-4131-a5d3-0846e36882f9&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2",
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8b61f6d1-8dc4-4b0b-a78e-0f024387baf5%2FIMG_9812.heic?id=aba62b9a-199c-4725-be54-468c56340ee5&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "혜화관 엘리베이터",
+    "goto": "right",
+    "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
+  },
+  "law": {
+    "x": 127.000753,
+    "y": 37.558171,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F51291292-484e-49f2-9a0e-d1cc36047ef8%2FIMG_9806.heic?id=5ec41567-fcdf-42f6-9fad-37360f7d829c&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "법학/만해관",
+    "goto": "left",
+    "info": "1F 프린터, 자판기<br>2F 편의점, 프린터, 자판기<br>3F 라운지, 샤워실(남자)"
+  },
+  "law_elevator": {
+    "x": 127.001093,
+    "y": 37.558154,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2233a318-9e71-456d-8f28-815136ab6d55%2FIMG_9834.heic?id=14e6147e-0de3-48a1-b5d3-cc818bbace43&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=1540&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "법학관 엘리베이터",
+    "goto": "left",
+    "info": "1F 프린터, 자판기<br>2F 편의점, 프린터, 자판기<br>3F 라운지, 샤워실(남자)"
+  },
+  "wonheung_elevator": {
+    "x": 126.998996,
+    "y": 37.559003,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F81f484ea-26a2-48e3-9448-6b9f6e3743a2%2FIMG_9797.heic?id=ef019db9-6a58-4746-8589-f75972738b40&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "원흥관 엘리베이터",
+    "goto": "left",
+    "info": "1F 자판기<br>2F 자판기<br>3F 샤워실, 편의점, 라운지, 프린터, 자판기<br>4F ATM(신한)"
+  },
+  "social": {
+    "x": 127.002617,
+    "y": 37.557358,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fccf8e360-ce79-43f1-ab7b-ab1113e2ee0a%2FIMG_9817.heic?id=bb7769ce-2e59-4853-bc4f-32b89184ef6c&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "사회과학관 엘리베이터",
+    "goto": "right",
+    "info": "3F 자판기"
+  },
+  "main_elevator": {
+    "x": 126.999358,
+    "y": 37.558757,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1286924f-4d56-4e5c-ac5d-7bf02f33eaff%2FIMG_9803.heic?id=5d1191e0-025d-4925-a891-78b9f079dedd&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "본관 엘리베이터",
+    "goto": "left"
+  },
+  "center_library": {
+    "x": 126.999328,
+    "y": 37.557996,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4f73074f-d449-48fb-a28e-43ebf03bb336%2FIMG_9799.heic?id=2185bbb9-029b-424a-94a2-e5bc48975aeb&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "중앙도서관 엘리베이터",
+    "goto": "left",
+    "info": "2F 라운지<br>3F 프린터<br>4F 편의점"
+  },
+  "info_p": {
+    "x": 126.998512,
+    "y": 37.559889,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fdfce7c91-3657-4639-84ed-7cf4759a8403%2FIMG_9791.heic?id=42523769-c481-40fd-9fa1-6449a8b68968&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=480&userId=&cache=v2"
+    ],
+    "str": "정보문화관P 입구",
+    "goto": "left"
+  },
+  "info_q": {
+    "x": 126.998394,
+    "y": 37.559704,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb1ce538d-1eae-41e1-aeff-269aaf8f08c9%2FIMG_9795.heic?id=5b921148-c248-4b1e-96cc-7c59239c53fa&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=480&userId=&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F66c1eb78-a915-4459-aa0d-b4fee01c6fda%2FIMG_9794.heic?id=b34ddeb9-e5f7-46a7-b4b0-53e72e94e040&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "정보문화관Q 입구",
+    "goto": "left"
+  },
+  "social_base_first": {
+    "x": 127.002688,
+    "y": 37.55741,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff1afffc9-5407-4bfe-8867-6c696db62b61%2FIMG_9821.heic?id=ae88c59d-82ef-40af-93d5-16d1e44bec9f&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fdf826e6d-a0ee-4d81-8780-da5d18a06ce3%2FIMG_9820.heic?id=6a2d9699-2131-4fd3-a96f-2994c3751a03&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "사회과학관 지하 1층",
+    "goto": "right",
+    "info": "3F 자판기"
+  },
+  "hyehwa_bridge_side": {
+    "x": 127.001083,
+    "y": 37.557648,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1c4d1893-47cd-4a62-9fa4-f21db8db16ef%2FIMG_9833.heic?id=dfa5e471-2de7-45a8-a638-0c33baf37eba&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "혜화관 구름다리에서 계단 앞",
+    "goto": "right",
+    "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
+  },
+  "jeonggak_side": {
+    "x": 127.000603,
+    "y": 37.557424,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2153258c-133f-4a21-8910-0b3bf437b90e%2FIMG_9832.heic?id=f624f04b-7784-4cb8-ba3d-ea0e76cfa81f&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2650ba0b-2623-4572-bf20-921acab939eb%2FIMG_9831.heic?id=9269272c-c23f-46fb-a5e9-9deb56d19408&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "정각원 옆 길",
+    "goto": "left"
+  },
+  "info_p_elevator": {
+    "x": 126.998523,
+    "y": 37.559407,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F500adfe4-a648-42a7-8b3d-37cf394e3eeb%2FIMG_9793.heic?id=3e798d5e-f919-4b05-acd1-3bfa663fd164&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "정보문화관P 엘리베이터",
+    "goto": "left"
+  },
+  "chungmuro": {
+    "x": 126.993429,
+    "y": 37.561328,
+    "img": [],
+    "str": "충무로역 엘리베이터",
+    "goto": "left"
+  },
+  "dongguk_sta": {
+    "x": 127.005086,
+    "y": 37.558903,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc33a2ce7-0ecc-4874-bdb9-bc1f0a825b69%2FIMG_9826.heic?id=b4676c59-0f46-4c05-81fd-bc782e02f8db&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F3ebcfaad-7df4-4915-b50a-842f469b2eb4%2FIMG_9825.heic?id=e030f8b5-d941-43c4-addf-bafacf4561fd&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "동대입구역 엘리베이터",
+    "goto": "right"
+  },
+  "pal_road": {
+    "x": 127.000195,
+    "y": 37.558283,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F0c780b5e-9fde-4879-bad6-c5dbffa03141%2FIMG_9804.heic?id=3103fabe-c3e3-4797-b9fd-73d498c4a713&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "팔정도",
+    "goto": "left"
+  },
+  "hakrim": {
+    "x": 126.999828,
+    "y": 37.560197,
+    "img": [],
+    "str": "학림관 경사로",
+    "goto": "left",
+    "info": "B1 편의점<br>1F 라운지, ATM(신한), 프린터<br>2F 자판기, 프린터<br>4F 자판기"
+  },
+  "culture": {
+    "x": 127.002956,
+    "y": 37.557804,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4fc248da-63b2-401c-99ad-ab1a4801949d%2FIMG_9822.heic?id=889969c0-2213-4e64-813c-e82abc1f4d02&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6c91be10-90e9-4fac-bf71-b2a44b7b23bf%2FIMG_9829.heic?id=80650125-b996-4dde-b029-982e3736b2b3&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "학술-문화관 문화관 1층 경사로",
+    "goto": "right",
+    "info": "B1 식당, 카페<br>1F 자판기, 프린터, 편의점<br>3F 자판기"
+  },
+  "haksul": {
+    "x": 127.003461,
+    "y": 37.557862,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fadeb8f1b-532e-4fc1-9a7b-dcc569c71dd3%2FIMG_9830.heic?id=f8ce3d7a-c90b-4cdc-9492-56615ad746ae&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fadeb8f1b-532e-4fc1-9a7b-dcc569c71dd3%2FIMG_9830.heic?id=f8ce3d7a-c90b-4cdc-9492-56615ad746ae&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "학술-문화관 학술관 1층 경사로",
+    "goto": "right",
+    "info": "B1 카페<br>1F 프린터<br>3F 자판기"
+  },
+  "business": {
+    "x": 127.002805,
+    "y": 37.557254,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8e6488b7-124d-4f4f-9851-5234f6cb60cb%2FIMG_9819.heic?id=e14d9fee-19a0-4cba-b6ae-6810e2e87d9c&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=380&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2"
+    ],
+    "str": "경영관 2층 경사로",
+    "goto": "right",
+    "info": "1F 자판기, 라운지<br>2F 자판기, 프린터, 라운지<br>6F 하늘마루"
+  },
+  "myeongjin": {
+    "x": 127.000029,
+    "y": 37.557973,
+    "img": [],
+    "str": "명진관 경사로",
+    "goto": "left",
+    "info": "1F 자판기, 프린터, 라운지"
+  },
+  "sangrokwon": {
+    "x": 126.999311,
+    "y": 37.557175,
+    "img": [
+      "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcff441c0-4f84-45db-b7f6-2d9b514a3eed%2FIMG_9841.heic?id=51cd110b-e820-4f77-a238-aeba05fc3214&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=380&userId=f3510bf7-cc80-45b6-9d78-f71f3b6c2254&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F074b58cc-2733-4ace-a208-eaddc5eb5cd9%2FIMG_9840.heic?id=1c17245a-c7e5-4245-83cf-a03b5bae8a3c&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=380&userId=&cache=v2"
+    ],
+    "str": "상록원",
+    "goto": "left",
+    "info": "1F 버거킹, 솥앤누들, 분식, 편의점<br>2F 학생식당<br>3F 교직원식당"
+  },
+  "playground": {
+    "x": 127.000453,
+    "y": 37.557028,
+    "img": [],
+    "str": "대운동장 경사로",
+    "goto": "left"
+  },
+  "leehaerang": {
+    "x": 127.00353,
+    "y": 37.558536,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F269d4018-4578-4a5d-8c6e-80080cde8405%2FIMG_9827.heic?id=26c7b305-88ec-494a-ad5a-93b0b8f9a9bb&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "이해랑예술극장",
+    "goto": "right"
+  },
+  "main_building": {
+    "x": 126.999853,
+    "y": 37.558772,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F038c7fda-b98a-4803-97f4-1e23fac49a9b%2FIMG_9800.heic?id=f5f5738f-4e81-47ff-a010-119737388daa&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=480&userId=&cache=v2"
+    ],
+    "str": "본관 3층 경사로",
+    "goto": "left"
+  },
+  "main_second": {
+    "x": 126.999147,
+    "y": 37.558366,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F36655cc1-2caf-4cff-9d70-90c69d048399%2FIMG_9788.heic?id=64626df7-75f5-48d5-bb70-8e84b6d4a33f&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=480&userId=&cache=v2"
+    ],
+    "str": "본관 2층 쪽문",
+    "goto": "left"
+  },
+  "new_engineer_first": {
+    "x": 126.997953,
+    "y": 37.558374,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5df36189-c2cc-439d-b76a-eae7af27fbe1%2FIMG_9781.heic?id=dcad28c5-744a-4066-bd67-5e3f6b7505ac&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=380&userId=&cache=v2"
+    ],
+    "str": "신공학관 1층 경사로",
+    "goto": "left",
+    "info": "1F 식당, ATM, 편의점<br>3F 프린터, 자판기<br>4F 자판기<br>5F 샤워실(남자)<br>7F 샤워실(여자)<br>"
+  },
+  "hyehwa_side": {
+    "x": 127.001396,
+    "y": 37.557883,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fef23cb39-a130-4e4b-909c-70ce18ad503c%2FIMG_9809.heic?id=44c53001-37ac-4785-92f6-e84df76f51d1&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ffa4a4fa8-50b8-4f5d-946a-cd2a78887c1d%2FIMG_9810.heic?id=773adf59-42f6-4780-aece-369a393dc884&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "혜화관 구름다리 옆 길",
+    "goto": "right",
+    "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
+  },
+  "law_side": {
+    "x": 127.000731,
+    "y": 37.558529,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F218667eb-01b3-436b-ac8e-203128104fb6%2FIMG_9807.heic?id=b1871424-4060-4d25-872d-51c422f1cf46&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "법학관 옆 길",
+    "goto": "left",
+    "info": "1F 프린터, 자판기<br>2F 편의점, 프린터, 자판기<br>3F 라운지, 샤워실(남자)"
+  },
+  "hyehwa_first": {
+    "x": 127.002041,
+    "y": 37.557606,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F169cd03d-76bf-4079-baf0-6480f5d3f53d%2FIMG_9815.heic?id=5adb80ab-e8c6-4f64-a64d-06f661662921&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2",
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2ea88cd9-ad45-4c06-bc67-77a42c6c80ee%2FIMG_9814.heic?id=8bcb5bf2-fb7c-4073-94a2-f99b34c46656&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "혜화관 1층 경사로",
+    "goto": "right",
+    "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
+  },
+  "social_third": {
+    "x": 127.002419,
+    "y": 37.557469,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5a62ab18-3fcf-4c27-9118-a92dc9574fe0%2FIMG_9816.heic?id=1f20c534-ec4d-433d-99f4-4181e8a09fb8&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "사회과학관 3층 입구 경사로",
+    "goto": "right",
+    "info": "3F 자판기"
+  },
+  "business_second": {
+    "x": 127.002815,
+    "y": 37.557134,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8e6488b7-124d-4f4f-9851-5234f6cb60cb%2FIMG_9819.heic?id=e14d9fee-19a0-4cba-b6ae-6810e2e87d9c&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=380&userId=&cache=v2"
+    ],
+    "str": "경영관 2층 입구 경사로",
+    "goto": "right"
+  },
+  "social_second": {
+    "x": 127.002442,
+    "y": 37.557249,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F17fd271a-7482-4c5e-8b45-947fb0619fc4%2FIMG_9818.heic?id=49774e38-73f6-4a6a-827c-2cdcdddb3589&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "사회과학관 2층 입구 경사로",
+    "goto": "right",
+    "info": "3F 자판기"
+  },
+  "wonheung": {
+    "x": 126.999167,
+    "y": 37.558807,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F784b2f72-872d-4b26-907e-8b0e4524f42e%2FIMG_9789.heic?id=620eeee3-dc18-4b5e-ae4a-e9ca26ef2d41&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=580&userId=&cache=v2"
+    ],
+    "str": "원흥관 4층 입구 경사로",
+    "goto": "left",
+    "info": "1F 자판기<br>2F 자판기<br>3F 샤워실, 편의점, 라운지, 프린터, 자판기<br>4F ATM(신한)"
+  },
+  "hyehwa_bridge": {
+    "x": 127.001379,
+    "y": 37.557747,
+    "img": [
+      "https://radical-alto-0ef.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F615c2a0c-156a-4b97-a711-d8772bb4aa3a%2FIMG_9811.heic?id=666a24eb-12e6-43f3-a1be-ec2afb4037e1&table=block&spaceId=1b76ece2-67fd-49d2-be92-1b87151b45ba&width=2000&userId=&cache=v2"
+    ],
+    "str": "혜화관 구름다리 경사로",
+    "goto": "right",
+    "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
+  }
+}

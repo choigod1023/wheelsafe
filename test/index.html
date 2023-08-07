@@ -12,105 +12,63 @@
     <script type="text/javascript">
         let first_loaded = true;
         // 1. 파일 로드
-        // function getMyGps() {
-        //     // getMyGps : gps로 사용자의 현재 위치 받아오는 함수, Promise를 리턴하는 방식
+        function getMyGps() {
+            // getMyGps : gps로 사용자의 현재 위치 받아오는 함수, Promise를 리턴하는 방식
 
-        //     let gpsOptions = {
-        //         enableHighAccuracy: true,
-        //         timeout: 5000
-        //     };
+            let gpsOptions = {
+                enableHighAccuracy: true,
+                timeout: 5000
+            };
 
-        //     return new Promise((resolve, rejected) => {
-        //         navigator.geolocation.getCurrentPosition(resolve, rejected);
-        //     });
-        // }
-        const building_coordinates = {
-            new_engineer: {
-                x: 126.998179,
-                y: 37.558282
-            },
-            hyehwa: {
-                x: 127.001753,
-                y: 37.557555
-            },
-            law: {
-                x: 127.001093,
-                y: 37.558154
-            },
-            wonheung: {
-                x: 126.998996,
-                y: 37.559003
-            },
-            social: {
-                x: 127.002617,
-                y: 37.557358
-            },
-            main_building: {
-                x: 126.999147,
-                y: 37.558366
-            },
-            center_library: {
-                x: 126.999328,
-                y: 37.557996
-            },
-            chungmuro: {
-                x: 126.993429,
-                y: 37.561328
-            },
-            dongguk_sta: {
-                x: 127.005086,
-                y: 37.558903
-            },
-            pal_road: {
-                x: 127.000195,
-                y: 37.558283
-            },
-            hakrim: {
-                x: 126.999828,
-                y: 37.560197
-            },
-            culture: {
-                x: 127.002956,
-                y: 37.557804
-            },
-            business: {
-                x: 127.002805,
-                y: 37.557254
-            },
-            myeongjin: {
-                x: 127.000029,
-                y: 37.557973
-            },
-            sangrokwon: {
-                x: 126.999311,
-                y: 37.557175
-            },
-            playground: {
-                x: 127.000453,
-                y: 37.557028
+            return new Promise((resolve, rejected) => {
+                navigator.geolocation.getCurrentPosition(resolve, rejected);
+            });
+        }
+        const res = async () => {
+            const response = await fetch("http://ec2-54-180-125-30.ap-northeast-2.compute.amazonaws.com:8080/marker");
+            if (response.status === 200) {
+                const data = await response.json()
+
+                await console.log('dataaaaa')
+                await console.log(data);
+                return data;
             }
         }
+
+
         async function main() {
+            const response = await res();
+            const building_coordinates = response;
             let start = document.querySelector('#start_select > option:checked').value;
             let end = document.querySelector('#end_select > option:checked').value;
             console.log(start)
-            await load_map(building_coordinates[start].x, building_coordinates[start].y, building_coordinates[end].x, building_coordinates[end].y, start, end);
+            let temp = "";
+            if (building_coordinates[start].goto == "right" && building_coordinates[end].goto == "left") {
+                [start, end] = [end, start];
+            }
+            console.log("swap?");
+            console.log(start, end);
+            await load_map(building_coordinates[start].x, building_coordinates[start].y, building_coordinates[end].x, building_coordinates[end].y, start, end, building_coordinates[start].goto, building_coordinates[end].goto);
         }
-        async function load_map(startX, startY, endX, endY, startStr, endStr) {
+        async function load_map(startX, startY, endX, endY, startStr, endStr, startGoto, endGoto) {
+
+            const response = await res();
+            const building_coordinates = response;
             let currentX = 0;
             let currentY = 0;
             try {
+                setInterval(async function () {
+                    if (navigator.geolocation) {
+                        const position = await getMyGps();
+                        currentY = position.coords.latitude;
+                        currentX = position.coords.longitude;
+                    }
+                    console.log(currentX, currentY)
 
-                if (navigator.geolocation) {
-                    const position = await getMyGps();
-                    currentY = position.coords.latitude;
-                    currentX = position.coords.longitude;
-                }
-                console.log(currentX, currentY)
-
-                addMarker("llCurrent", currentX, currentY, 3)
+                    addMarker("llCurrent", currentX, currentY, 3)
+                }, 1000)
             }
-            catch (e) { }
+            catch (e) { console.log(e) }
             console.log(first_loaded)
             if (first_loaded) {
                 first_loaded = false;
@@ -132,7 +90,25 @@
             var new_Click_polyLine = [];
 
             function drawData(data, tempX, tempY) {
-                setTimeout(function () {
+                const getAjax = function (datas) {
+                    return new Promise((resolve, rejuct) => {
+                        $.ajax({
+                            method: "POST",
+                            headers: headers,
+                            url: "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1", //
+                            async: true,
+                            data: datas,
+                            success: function (response) {
+                                prtcl = response;
+                                resolve(prtcl);
+                            },
+                            error: (e) => {
+                                reject(e);  // 3.
+                            }
+                        });
+                    })
+                }
+                setTimeout(async function () {
                     routeData = data;
                     var resultStr = "";
                     var distance = 0;
@@ -143,7 +119,9 @@
                     var ar_line = [];
                     var startPt = 0;
                     var endPt = 0;
-                    if (startStr == "chungmuro" || endStr == "chungmuro") {
+                    // if () {
+                    if (startStr != "chungmuro" || endStr != "chungmuro" || startStr != "wonheung" || endStr != "wonheung") {
+
                         for (var i = 0; i < data.features.length; i++) {
                             var feature = data.features[i];
                             console.log(feature)
@@ -163,19 +141,6 @@
                                     map: map
                                 });
                                 console.log(feature.geometry.coordinates)
-                                // var startPt = new Tmapv3.LatLng(startX, startY);
-
-                                // var endPt = new Tmapv3.LatLng(startX, startY);
-                                // ar_line.push(startPt);
-                                // pointArray.push([startX, startY]);
-                                // ar_line.push(endPt);
-                                // pointArray.push([endX, endY]);
-                                // for (var j = 0; j < feature.geometry.coordinates.length; j++) {
-                                //     var startPt = new Tmapv3.LatLng(feature.geometry.coordinates[j][1], feature.geometry
-                                //         .coordinates[j][0]);
-                                //     ar_line.push(startPt);
-                                //     pointArray.push(feature.geometry.coordinates[j]);
-                                // }
                                 console.log(ar_line);
 
                                 new_polyLine.push(polyline);
@@ -185,25 +150,104 @@
 
                         ar_line = [];
                         console.log(tempX, tempY)
-                        if (startStr == "chungmuro") {
+                        if ((startStr == "chungmuro" || startStr == "new_engineer") && ((!(startStr == "chungmuro" && endStr == "new_engineer")) && (!(endStr == "chungmuro" && startStr == "new_engineer")))) {
+                            Pt1 = new Tmapv3.LatLng(building_coordinates['new_engineer'].y, building_coordinates['new_engineer'].x);
+                            Pt2 = new Tmapv3.LatLng(building_coordinates['main_second'].y, building_coordinates['main_second'].x);
+                            Pt3 = new Tmapv3.LatLng(37.558337, 126.999473);
+                            Pt4 = new Tmapv3.LatLng(37.558691, 126.999656);
+                            Pt5 = new Tmapv3.LatLng(building_coordinates['main_elevator'].y, building_coordinates['main_elevator'].x);
+                            Pt6 = new Tmapv3.LatLng(building_coordinates['main_building'].y, building_coordinates['main_building'].x);
+                            ar_line.push(Pt1);
+                            ar_line.push(Pt2);
+                            ar_line.push(Pt3);
+                            ar_line.push(Pt4);
+                            ar_line.push(Pt5);
+                            ar_line.push(Pt6);
+                        }
+
+                        var polyline = new Tmapv3.Polyline({
+                            path: ar_line,
+                            strokeColor: "#ff0000",
+                            strokeWeight: 6,
+                            map: map
+                        });
+                    }
+                    else if (startStr == "dongguk_sta" || endStr == "dongguk_sta") {
+                        for (var i = 0; i < data.features.length; i++) {
+                            var feature = data.features[i];
+                            console.log(feature)
+                            //배열에 경로 좌표 저장
+                            if (feature.geometry.type == "LineString") {
+                                ar_line = [];
+                                for (var j = 0; j < feature.geometry.coordinates.length; j++) {
+                                    var startPt = new Tmapv3.LatLng(feature.geometry.coordinates[j][1], feature.geometry
+                                        .coordinates[j][0]);
+                                    ar_line.push(startPt);
+                                    pointArray.push(feature.geometry.coordinates[j]);
+                                }
+                                var polyline = new Tmapv3.Polyline({
+                                    path: ar_line,
+                                    strokeColor: "#ff0000",
+                                    strokeWeight: 6,
+                                    map: map
+                                });
+                                console.log(feature.geometry.coordinates)
+                                console.log(ar_line);
+
+                                new_polyLine.push(polyline);
+                            }
+
+                        }
+
+                        ar_line = [];
+                        console.log(tempX, tempY)
+                        if (startStr == "dongguk_sta") {
                             startPt = new Tmapv3.LatLng(tempY, tempX);
                             endPt = new Tmapv3.LatLng(endY, endX);
                         }
-                        else if (endStr == "chungmuro") {
+                        else if (endStr == "dongguk_sta") {
                             endPt = new Tmapv3.LatLng(tempY, tempX);
                             startPt = new Tmapv3.LatLng(startY, startX);
                         }
                     }
-                    else {
 
-                        startPt = new Tmapv3.LatLng(startY, startX);
-                        endPt = new Tmapv3.LatLng(endY, endX);
+                    ar_line = [];
+                    if ((endGoto == "right" && startGoto == "left") || (endGoto == "left" && startGoto == "right")) {
+                        ar_line = [];
+                        Pt1 = new Tmapv3.LatLng(building_coordinates['law_side'].y, building_coordinates['law_side'].x);
 
+                        Pt2 = new Tmapv3.LatLng(37.558420, 127.001107);
+                        Pt3 = new Tmapv3.LatLng(37.558216, 127.001210);
+                        Pt4 = new Tmapv3.LatLng(37.558111, 127.001527);
+                        Pt5 = new Tmapv3.LatLng(37.557924, 127.001430);
+                        Pt6 = new Tmapv3.LatLng(building_coordinates['hyehwa'].y, building_coordinates['hyehwa'].x);
+                        ar_line.push(Pt1);
+                        ar_line.push(Pt2);
+                        ar_line.push(Pt3);
+                        ar_line.push(Pt4);
+                        ar_line.push(Pt5);
+                        ar_line.push(Pt6);
+                        var polyline = new Tmapv3.Polyline({
+                            path: ar_line,
+                            strokeColor: "#ff0000",
+                            strokeWeight: 6,
+                            map: map
+                        });
+
+                        ar_line = [];
+                        endPt = new Tmapv3.LatLng(building_coordinates['hyehwa'].y, building_coordinates['hyehwa'].x);
+                        startPt = new Tmapv3.LatLng(building_coordinates['hyehwa_first'].y, building_coordinates['hyehwa_first'].x)
                     }
+                    // else {
+                    //     startPt = new Tmapv3.LatLng(startY, startX);
+                    //     endPt = new Tmapv3.LatLng(endY, endX);
+
+                    // }
                     ar_line.push(startPt);
                     pointArray.push([startX, startY]);
                     pointArray.push([endX, endY]);
                     ar_line.push(endPt);
+                    console.log("arline")
                     console.log(ar_line)
                     var polyline = new Tmapv3.Polyline({
                         path: ar_line,
@@ -211,36 +255,7 @@
                         strokeWeight: 6,
                         map: map
                     });
-                    // var pointId2 = feature.properties.viaPointId;
-                    // if (pointId1 != pointId2) {
-                    //     equalData = [];
-                    //     equalData.push(feature);
-                    //     newData.push(equalData);
-                    //     pointId1 = pointId2;
-                    // } else {
-                    //     equalData.push(feature);
-                    // }
-                    // geoData = newData;
-                    // var markerCnt = 1;
-                    // for (var i = 0; i < newData.length; i++) {
-                    //     var mData = newData[i];
-                    //     var type = mData[0].geometry.type;
-                    //     var pointType = mData[0].properties.pointType;
-                    //     var pointTypeCheck = false; // 경유지 일때만 true
-                    //     if (mData[0].properties.pointType == "S") {
-                    //         var img = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
-                    //         var lon = mData[0].geometry.coordinates[0];
-                    //         var lat = mData[0].geometry.coordinates[1];
-                    //     } else if (mData[0].properties.pointType == "E") {
-                    //         var img = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
-                    //         var lon = mData[0].geometry.coordinates[0];
-                    //         var lat = mData[0].geometry.coordinates[1];
-                    //     } else {
-                    //         markerCnt = i;
-                    //         var lon = mData[0].geometry.coordinates[0];
-                    //         var lat = mData[0].geometry.coordinates[1];
-                    //     }
-                    // }
+
                 }, 1300)
                 // 지도위에 선은 다 지우기
 
@@ -259,27 +274,14 @@
             var marker_start = 3;
             console.log(building_coordinates);
             for (item in building_coordinates) {
-
                 // 3. 경유지 심볼 찍기
-                addMarker("llPass", building_coordinates[item].x, building_coordinates[item].y, marker_start);
+                addMarker("llPass", building_coordinates[item].x, building_coordinates[item].y, item);
                 marker_start++;
-            }
-            try {
-
-                const res = await fetch('http://ec2-54-180-125-30.ap-northeast-2.compute.amazonaws.com:8080/marker')
-                const marker_json = await res.json(); for (key in marker_json) {
-                    console.log(marker_json[key]);
-                    addMarker("llPass", marker_json[key].x, marker_json[key].y, marker_json[key].name);
-                }
-            }
-            catch (e) {
-                console.log(e.message);
             }
 
             addMarker("llStart", startX, startY, startStr);
             // 도착 
             addMarker("llEnd", endX, endY, endStr);
-
             function addMarker(status, lon, lat, tag) {
                 //출도착경유구분
                 //이미지 파일 변경.
@@ -304,7 +306,7 @@
                 var marker = new Tmapv3.Marker({
                     position: new Tmapv3.LatLng(lat, lon),
                     iconSize: new Tmapv3.Size(15, 15),
-                    iconHTML: `<a><img src='${imgURL}'></a>`,
+                    iconHTML: `<a name="${tag}" class="marker" ><img name="${tag}" src='${imgURL}'></a>`,
                     icon: imgURL,
                     map: map
                 });
@@ -331,7 +333,147 @@
             let tempX = 0;
             let tempY = 0;
             let data = {};
-            if (startStr == "chungmuro") {
+            if ((startGoto == "left" && endGoto == "right")) {
+                if (startStr == "chungmuro" || startStr == "new_engineer") {
+                    startXX = building_coordinates['main_building'].x;
+                    startYY = building_coordinates['main_building'].y;
+                }
+                else {
+                    startXX = startX;
+                    startYY = startY;
+                }
+                tempX = building_coordinates['law_side'].x
+                tempY = building_coordinates['law_side'].y
+                data = {
+                    startX: startXX,
+                    startY: startYY,
+                    startName: "시작점",
+                    endName: "끝점",
+                    endX: tempX,
+                    endY: tempY,
+                    // passList: passList,
+                    reqCoordType: "WGS84GEO",
+                    resCoordType: "WGS84GEO",
+                    angle: "172",
+                    searchOption: "0",
+                    trafficInfo: "Y"
+                }
+                const getAjax = function () {
+                    return new Promise((resolve, rejuct) => {
+                        $.ajax({
+                            method: "POST",
+                            headers: headers,
+                            url: "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1", //
+                            async: true,
+                            data: data,
+                            success: function (response) {
+                                prtcl = response;
+                                resolve(prtcl);
+                            },
+                            error: (e) => {
+                                reject(e);  // 3.
+                            }
+                        });
+                    })
+                }
+                const ajaxres = await getAjax();
+                drawData(ajaxres, tempX, tempY)
+                if (endStr != "hyehwa") {
+
+                    startXX = building_coordinates['hyehwa_first'].x;
+                    startYY = building_coordinates['hyehwa_first'].y;
+                    data = {
+                        startX: startXX,
+                        startY: startYY,
+                        startName: "시작점",
+                        endName: "끝점",
+                        endX: endX,
+                        endY: endY,
+                        // passList: passList,
+                        reqCoordType: "WGS84GEO",
+                        resCoordType: "WGS84GEO",
+                        angle: "172",
+                        searchOption: "0",
+                        trafficInfo: "Y"
+                    }
+
+                    const ajaxres2 = await getAjax();
+                    drawData(ajaxres2, tempX, tempY);
+                }
+
+            } if (startStr == "chungmuro" || startStr == "new_engineer") {
+
+                // if (endGoto == "right" && startGoto == "left") {
+                //     startX = building_coordinates['new_engineer'].x;
+                //     startY = building_coordinates['new_engineer'].y;
+                // }
+                if (endGoto == "right" && startGoto == "left" && startStr == "chungmuro") {
+                    startXX = building_coordinates['chungmuro'].x;
+                    startYY = building_coordinates['chungmuro'].y;
+                    endXX = building_coordinates['new_engineer'].x;
+                    endYY = building_coordinates['new_engineer'].y;
+                }
+                else if ((endGoto == "right" && startGoto == "left") && (startStr == "new_engineer" || endStr == "new_engineer")) {
+                    startXX = building_coordinates['main_building'].x;
+                    startYY = building_coordinates['main_building'].y;
+                    endXX = building_coordinates['law_side'].x;
+                    endYY = building_coordinates['law_side'].y;
+                }
+                else if (startStr == "new_engineer" && endStr != "chungmuro") {
+                    startXX = building_coordinates['main_building'].x;
+                    startYY = building_coordinates['main_building'].y;
+                    endXX = endX;
+                    endYY = endY;
+                }
+                else if (startStr == "hakrim" || endStr == "hakrim") {
+                    startXX = building_coordinates['main_building'].x;
+                    startYY = building_coordinates['main_building'].y;
+                    endXX = endX;
+                    endYY = endY;
+                }
+                else {
+                    startXX = building_coordinates['main_building'].x;
+                    startYY = building_coordinates['main_building'].y;
+                    endXX = endX;
+                    endYY = endY;
+                }
+                data = {
+                    startX: startXX,
+                    startY: startYY,
+                    startName: "시작점",
+                    endName: "끝점",
+                    endX: endXX,
+                    endY: endYY,
+                    // passList: passList,
+                    reqCoordType: "WGS84GEO",
+                    resCoordType: "WGS84GEO",
+                    angle: "172",
+                    searchOption: "0",
+                    trafficInfo: "Y"
+                }
+                const getAjax = function () {
+                    return new Promise((resolve, rejuct) => {
+                        $.ajax({
+                            method: "POST",
+                            headers: headers,
+                            url: "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1", //
+                            async: true,
+                            data: data,
+                            success: function (response) {
+                                prtcl = response;
+                                resolve(prtcl);
+                            },
+                            error: (e) => {
+                                reject(e);  // 3.
+                            }
+                        });
+                    })
+                }
+                const ajaxres = await getAjax();
+                if (true) {
+                    drawData(ajaxres, tempX, tempY);
+
+                }
                 tempX = building_coordinates['new_engineer'].x;
                 tempY = building_coordinates['new_engineer'].y;
                 data = {
@@ -348,16 +490,21 @@
                     searchOption: "0",
                     trafficInfo: "Y"
                 }
-            } else if (endStr == "chungmuro") {
-                tempX = building_coordinates['new_engineer'].x;
-                tempY = building_coordinates['new_engineer'].y;
+
+            }
+            else if (startStr == "dongguk_sta") {
+                if (((endStr != "haksul") || (endStr != "social") || (endStr != "business") || (endStr != "culture"))) {
+
+                    tempX = building_coordinates['social_third'].x;
+                    tempY = building_coordinates['social_third'].y;
+                }
                 data = {
-                    startX: tempX,
-                    startY: tempY,
+                    startX: startX,
+                    startY: startY,
                     startName: "시작점",
                     endName: "끝점",
-                    endX: endX,
-                    endY: endY,
+                    endX: tempX,
+                    endY: tempY,
                     // passList: passList,
                     reqCoordType: "WGS84GEO",
                     resCoordType: "WGS84GEO",
@@ -365,7 +512,11 @@
                     searchOption: "0",
                     trafficInfo: "Y"
                 }
-            } else {
+            }
+            else {
+                // tempX = endX;
+                // tempY = endY;
+                console.log("endendend")
                 data = {
                     startX: startX,
                     startY: startY,
@@ -394,7 +545,7 @@
                     var trafficColors = {
                         extractStyles: true,
                         /* 실제 교통정보가 표출되면 아래와 같은 Color로 Line이 생성됩니다. */
-                        trafficDefaultColor: "#636f63", //Default
+                        trafficDezfaultColor: "#636f63", //Default
                         trafficType1Color: "#19b95f", //원할
                         trafficType2Color: "#f15426", //지체
                         trafficType3Color: "#ff970e" //정체		
@@ -408,8 +559,12 @@
                         pointRadius: 2,
                         title: "this is a red line"
                     };
-                    drawData(prtcl, tempX, tempY);
+                    if (!((endGoto == "right" && startGoto == "left") || (endGoto == "left" && startGoto == "right"))) {
 
+                        console.log(prtcl)
+                        drawData(prtcl, tempX, tempY);
+
+                    }
                     // 6. 경로탐색 결과 반경만큼 지도 레벨 조정
                     setTimeout(async function () {
                         const campus_center = {
@@ -424,23 +579,6 @@
                         }
                         // var newData = geoData[0];
                         PTbounds = new Tmapv3.LatLngBounds();
-                        // for (var i = 0; i < newData.length; i++) {
-                        //     var mData = newData[i];
-                        //     var type = mData.geometry.type;
-                        //     var pointType = mData.properties.pointType;
-                        //     console.log(mData.geometry.coordinates)
-                        //     if (type == "Point") {
-                        //         var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[1] - 0.003, mData.geometry.coordinates[0] + 0.001);
-                        //         console.log(linePt);
-                        //         PTbounds.extend(linePt);
-                        //     } else {
-                        //         var startPt, endPt;
-                        //         for (var j = 0; j < mData.geometry.coordinates.length; j++) {
-                        //             var linePt = new Tmapv3.LatLng(mData.geometry.coordinates[j][1] - 0.0004, mData.geometry.coordinates[j][0] + 0.001);
-                        //             PTbounds.extend(linePt);
-                        //         }
-                        //     }
-                        // }
                         var linePt = new Tmapv3.LatLng(campus_center.y, campus_center.x);
                         PTbounds.extend(linePt);
                         await map.fitBounds(PTbounds, margin);
@@ -450,7 +588,35 @@
                     setTimeout(async () => {
                         await map.setZoom(16);
                     }, 3500)
+                    setTimeout(async () => {
+                        $('.marker').click(async function (e) {
 
+                            await modal(this.name)
+                        })
+                        // targetArr.forEach((target) => target.addEventListener('click', function () { search(target) }))
+                    }, 1000)
+                    function sleep(ms) {
+                        return new Promise((r) => setTimeout(r, ms));
+                    }
+                    async function modal(name) {
+                        console.log(building_coordinates[name])
+                        $("#modal_header").text(building_coordinates[name].str);
+                        console.log(building_coordinates[name].img)
+                        for (let item in building_coordinates[name].img) {
+                            console.log(item)
+                            await $("#modal_context").append(`<img  class="modal_img" src="${building_coordinates[name].img[item]}">`)
+                        }
+                        if (building_coordinates[name].info === undefined) {
+
+                            await $("#modal_info").append(`<div class="infomation">안내 정보를 확인할 수 없습니다.</div>`)
+
+                        }
+                        else {
+                            await $("#modal_info").append(`<div class="infomation">${building_coordinates[name].info}</div>`)
+                        }
+
+                        await $("#modal").attr("style", "display:block");
+                    }
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
@@ -505,6 +671,7 @@
             <li id="home"><a>WheelSafe</a></li>
         </ul>
     </nav>
+    <div id="desc">사진 로드에 시간이 소요될 수 있습니다.</div>
     <header>
         <div class="serach_list">
             <div id="start">
@@ -523,13 +690,15 @@
                     <option value="center_library">동국대학교 중앙도서관</option>
                     <option value="pal_road">동국대학교 팔정도</option>
                     <option value="hakrim">동국대학교 학림관</option>
-                    <option value="culture">동국대학교 학술문화관</option>
+                    <option value="culture">동국대학교 학술-문화 문화관</option>
+                    <option value="haksul">동국대학교 학술-문화 학술관</option>
                     <option value="business">동국대학교 경영관</option>
                     <option value="myeongjin">동국대학교 명진관</option>
                     <option value="sangrokwon">동국대학교 상록원</option>
                     <option value="playground">동국대학교 대운동장</option>
 
                 </select>
+                <button id="start_speech" onclick="speech_to_text('start')">음성인식</button>
             </div>
             <div id="end">
                 <span>도착지</span>
@@ -545,23 +714,202 @@
                     <option value="center_library">동국대학교 중앙도서관</option>
                     <option value="pal_road">동국대학교 팔정도</option>
                     <option value="hakrim">동국대학교 학림관</option>
-                    <option value="culture">동국대학교 학술문화관</option>
+                    <option value="culture">동국대학교 학술-문화 문화관</option>
+                    <option value="haksul">동국대학교 학술-문화 학술관</option>
                     <option value="business">동국대학교 경영관</option>
                     <option value="myeongjin">동국대학교 명진관</option>
                     <option value="sangrokwon">동국대학교 상록원</option>
                     <option value="playground">동국대학교 대운동장</option>
                 </select>
+                <button id="end_speech" onclick="speech_to_text('end')">음성인식</button>
             </div>
         </div>
         <button onclick="main()">길찾기</button>
     </header>
     <div id="map_div">
     </div>
+    <div id="root">
+    </div>
+
+    <div id="modal">
+
+        <div class="modal_content">
+            <h2 id="modal_header">모달 창</h2>
+
+            <p id="modal_context"></p>
+
+            <p id="modal_info"></p>
+            <button type="button" id="modal_close_btn">창 닫기</button>
+
+        </div>
+
+        <div class="modal_layer"></div>
+    </div>
+
 </body>
+<style>
+    #desc {
+        font-size: 15px;
+    }
+
+    .modal_img {
+        width: 200px;
+        height: 300px;
+    }
+
+    #modal_context {
+        text-align: center;
+    }
+
+    #modal {
+        display: none;
+        position: absolute;
+        top: 25%;
+        width: 100%;
+        z-index: 1;
+    }
+
+    #modal h2 {
+        margin: 0;
+        color: white;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    #modal button {
+        display: inline-block;
+        width: 100px;
+        margin-left: calc(100% - 100px - 10px);
+    }
+
+    #modal .modal_content {
+        width: 500px;
+        margin: 100px auto;
+        padding: 20px 10px;
+        background: black;
+        border: 1px solid white;
+    }
+
+    #modal .modal_layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+
+    #modal_info {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+<script>
+    var isRecognizing = false;
+
+    var start_button = document.querySelector("#start_speech");
+    var end_button = document.querySelector("#end_speech");
+    if ('SpeechRecognition' in window) {
+        // Speech recognition support. Talk to your apps! 
+        console.log("음성인식을 지원하는 브라우저입니다.")
+    }
+    try {
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    } catch (e) {
+        console.error(e);
+    }
+    function speech_to_text(point) {
+
+        recognition.start();
+        isRecognizing = true;
+        recognition.onstart = function () {
+
+            console.log("음성인식이 시작 되었습니다. 이제 마이크에 무슨 말이든 하세요.")
+            if (point == "start") {
+
+                start_button.innerHTML = "Listening...";
+                start_button.disabled = true;
+            }
+            else {
+                end_button.innerHTML = "Listening...";
+                end_button.disabled = true;
+            }
+        }
+
+        recognition.onspeechend = function () {
+            if (point == "start") {
+
+                start_button.disabled = false;
+                start_button.innerHTML = "음성인식";
+            } else {
+
+                end_button.disabled = false;
+                end_button.innerHTML = "음성인식";
+            }
+        }
+        recognition.onresult = function (event) {
+            console.log('You said: ', event.results[0][0].transcript);
+            // 결과를 출력 
+            var resText = event.results[0][0].transcript;
+            if (point == "start") {
+                const $select = document.querySelector('#start_select');
+                let options = document.querySelectorAll('#start_select > option');
+                for (let option of options) {
+                    if ((option.innerHTML).indexOf(resText) != -1) {
+                        $select.value = option.value;
+                    }
+                }
+            } else if (point == "end") {
+                const $select = document.querySelector('#end_select');
+                let options = document.querySelectorAll('#end_select > option');
+                for (let option of options) {
+                    if ((option.innerHTML).indexOf(resText) != -1) {
+                        $select.value = option.value;
+                    }
+                }
+            }
+            //text to sppech 
+
+        };
+
+        recognition.onend = function () {
+            if (point == "start") {
+
+                start_button.disabled = false;
+                start_button.innerHTML = "음성인식";
+                isRecognizing = false;
+            }
+            else {
+
+                end_button.disabled = false;
+                end_button.innerHTML = "음성인식";
+                isRecognizing = false;
+            }
+        }
+    }
+    function stop() {
+        recognition.stop();
+        button.disabled = false;
+        button.innerHTML = "음성인식";
+        isRecognizing = false;
+    }
+    $(".vsm-marker").click(function () {
+        console.log('marker clicked');
+        $("#modal").attr("style", "display:block");
+    });
+
+    $("#modal_close_btn").click(function () {
+        $("#modal").attr("style", "display:none");
+        $("#modal_header").text("");
+        $("#modal_context").empty();
+
+        $("#modal_info").empty();
+    });      
+</script>
 
 </html>
-
-
-
-
-<script>

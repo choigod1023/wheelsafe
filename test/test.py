@@ -5,16 +5,17 @@ import json
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-db = pymysql.connect(
-    user='admin',
-    password='jjang486',
-    host='database-1-instance-1.comumtztjsvx.ap-northeast-2.rds.amazonaws.com',
-    db='wheelsafe',
-)
-cursor = db.cursor(pymysql.cursors.DictCursor)
+    
 
 @app.route('/marker')
 def show_marker():
+    db = pymysql.connect(
+        user='admin',
+        password='jjang486',
+        host='database-1-instance-1.comumtztjsvx.ap-northeast-2.rds.amazonaws.com',
+        db='wheelsafe',
+    )
+    cursor = db.cursor(pymysql.cursors.DictCursor)
     cursor.execute("""
 select * FROM marker
 """)
