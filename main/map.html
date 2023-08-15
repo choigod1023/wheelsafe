@@ -11,29 +11,6 @@
     </script>
     <script type="text/javascript">
         let first_loaded = true;
-        let current_icon = "";
-        let account_name = "";
-        let modal_load = "";
-        let modal_flag = true;
-        let all_positions = [];
-        async function icon_account() {
-            current_icon = "";
-            account_name = document.querySelector('#name_account').value;
-            if (account_name != "") {
-
-                let sel = document.getElementById("select_account");
-                let text = sel.options[sel.selectedIndex].value;
-                let res = await register(account_name, text);
-                if (!res.done) {
-                    alert(`이미 있는 이름입니다. ${account_name}님으로 진행하겠습니다.`);
-                }
-                else {
-                    alert(`가입 완료! ${account_name}님, 환영합니다.`);
-                }
-                console.log(text);
-                current_icon = current_icon + '_' + text;
-            }
-        }
         // 1. 파일 로드
         function getMyGps() {
             // getMyGps : gps로 사용자의 현재 위치 받아오는 함수, Promise를 리턴하는 방식
@@ -47,84 +24,8 @@
                 navigator.geolocation.getCurrentPosition(resolve, rejected);
             });
         }
-        function return_img(current_dt, sunrise, sunset, weather, clouds) {
-            console.log(current_dt, sunrise, sunset, weather, clouds)
-            if ('Rain' == weather) {
-                return ['./img/rainy.png', '비']
-            }
-            else if ('Clouds' == weather && (clouds > 60)) {
-                return ['./img/cloud.png', '흐림']
-            }
-            else if ('Clouds' == weather && (current_dt < sunrise || current_dt > sunset)) {
-                return ['./img/night_cloud.png', '흐림']
-            }
-            else if ('Clouds' == weather && (sunrise < current_dt < sunset)) {
-                return ['./img/sun_cloud.png', '흐림']
-            }
-            else if ('Snow' == weather) {
-                return ['./img/snow.png', '눈']
-            }
-            else if ('Thunderstorm' == weather) {
-                return ['./img/storm.png', '천둥번개']
-            }
-            else if ('Mist' == weather || 'Haze' == weather || 'Fog' == weather) {
-                return ['./img/fog.png', '안개']
-            }
-            else if ('Clear' == weather && (current_dt < sunrise || current_dt > sunset)) {
-                return ['./img/night_clear.png', '맑음']
-            }
-            else if ('Clear' == weather && (sunrise < current_dt < sunset)) {
-                return ['./img/sun_clear.png', '맑음']
-            }
-
-        }
-        function getDistance(x1, y1, x2, y2) {
-            let x = x2 - x1;
-            let y = y2 - y1;
-
-            return Math.sqrt(x * x + y * y);
-        }
-        const realtime_res = async (name, x, y) => {
-            const response = await fetch(`http://ec2-54-180-125-30.ap-northeast-2.compute.amazonaws.com:8080/use?name=${name}&x=${x}&y=${y}`); if (response.status === 200) {
-                const data = await response.json()
-
-                await console.log('dataaaaa')
-                await console.log(data);
-                return data;
-            }
-        }
-        const register = async (name, vul) => {
-            const response = await fetch(`http://ec2-54-180-125-30.ap-northeast-2.compute.amazonaws.com:8080/register?name=${name}&vul=${vul}`); if (response.status === 200) {
-                const data = await response.json()
-
-                await console.log('dataaaaa')
-                await console.log(data);
-                return data;
-            }
-        }
-        const players = async () => {
-            const response = await fetch(`http://ec2-54-180-125-30.ap-northeast-2.compute.amazonaws.com:8080/players`); if (response.status === 200) {
-                const data = await response.json()
-
-                await console.log('dataaaaa')
-                await console.log(data);
-                return data;
-            }
-        }
-        // const weather
-
         const res = async () => {
             const response = await fetch("http://ec2-54-180-125-30.ap-northeast-2.compute.amazonaws.com:8080/marker");
-            if (response.status === 200) {
-                const data = await response.json()
-
-                await console.log('dataaaaa')
-                await console.log(data);
-                return data;
-            }
-        }
-        const weather = async (lon, lat) => {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=4ada87268facd87550e6a5126401fda4&units=metric`);
             if (response.status === 200) {
                 const data = await response.json()
 
@@ -142,131 +43,30 @@
             let end = document.querySelector('#end_select > option:checked').value;
             console.log(start)
             let temp = "";
-            if (building_coordinates[start].goto == "right" && building_coordinates[end].goto == "left" || start == "law") {
+            if (building_coordinates[start].goto == "right" && building_coordinates[end].goto == "left") {
                 [start, end] = [end, start];
             }
             console.log("swap?");
             console.log(start, end);
             await load_map(building_coordinates[start].x, building_coordinates[start].y, building_coordinates[end].x, building_coordinates[end].y, start, end, building_coordinates[start].goto, building_coordinates[end].goto);
         }
-        async function is_around(currentX, currentY) {
-            const response = await res();
-
-        }
         async function load_map(startX, startY, endX, endY, startStr, endStr, startGoto, endGoto) {
-            async function modal(name) {
-                const weather_info = await weather(building_coordinates[name].x, building_coordinates[name].y);
 
-                const current_dt = weather_info.current.dt;
-                const current_cloud = weather_info.current.clouds;
-                const weather_name = weather_info.current.weather[0].main;
-                const weather_temp = weather_info.current.temp;
-                const weather_humidity = weather_info.current.humidity;
-                const sunrise = weather_info.current.sunrise;
-                const sunset = weather_info.current.sunset;
-                const list_return = return_img(current_dt, sunrise, sunset, weather_name, parseInt(current_cloud));
-                console.log('list return');
-                console.log(list_return);
-                const current_img = list_return[0];
-                const current_text = list_return[1];
-                await $("#modal_context").append(`<img class="current_img" style="padding:0;" src="${current_img}"><span class ="current_text" >${current_text}</span><div class = "current_info"><span class="current_temp">${weather_temp}°C</span><br><span class="current_cloud">${weather_humidity}%</span></span></div>`)
-                $("#modal_header").text(building_coordinates[name].str);
-                console.log(building_coordinates[name].img)
-                for (let item in building_coordinates[name].img) {
-                    console.log(item)
-                    await $("#modal_context").append(`<img  class="modal_img" src="${building_coordinates[name].img[item]}">`)
-                }
-                if (building_coordinates[name].info === undefined) {
-
-                    await $("#modal_info").append(`<div class="infomation">안내 정보를 확인할 수 없습니다.</div>`)
-
-                }
-                else {
-                    await $("#modal_info").append(`<div class="infomation">${building_coordinates[name].info}</div>`)
-                }
-
-                await $("#modal").attr("style", "display:block");
-            }
             const response = await res();
             const building_coordinates = response;
             let currentX = 0;
             let currentY = 0;
-            async function navigation() {
-                if (navigator.geolocation) {
-                    const position = await getMyGps();
-                    currentY = position.coords.latitude;
-                    currentX = position.coords.longitude;
-                }
-
-                // await realtime_res(account_name, currentX, currentY);
-                console.log(currentX, currentY)
-                console.log(`llCurrent${current_icon}`)
-
-                //경로 이탈 alert
-                console.log('all position')
-                console.log(all_positions)
-
-                //distance modal loading
-                let playerInfo = await players();
-                $(".used").remove();
-                $(".current_marker").remove();
-                let nominees = [];
-                let distances = [];
-                for (var player of Object.keys(playerInfo)) {
-                    addMarker(`llCurrent_${playerInfo[player].vulnerability}`, playerInfo[player].x, playerInfo[player].y, playerInfo[player].name);
-                    if (playerInfo[player].name === account_name) {
-                        for (var p of all_positions) {
-                            if (p !== 0) {
-                                console.log(p);
-                                let distance = getDistance(p._lng, p._lat, playerInfo[player].x, playerInfo[player].y) * 10000;
-                                distances.push(distance);
-                            }
-                        }
-
-                        distances.sort();
-                        if (distances[0] > 10) {
-                            $("#status").css("color", "red");
-                            $("#status").text("경로이탈");
-
-                        }
-                        else {
-                            $("#status").css("color", "white");
-                            $("#status").text("정상운행중");
-                        }
-                        for (var info of Object.keys(building_coordinates)) {
-                            if (building_coordinates[info].y !== undefined) {
-                                let distance = getDistance(building_coordinates[info].x, building_coordinates[info].y, playerInfo[player].x, playerInfo[player].y) * 10000;
-                                if (distance < 1) {
-                                    nominees.push([info, distance])
-                                }
-                                console.log(building_coordinates[info].str, building_coordinates[info].x, building_coordinates[info].y, distance);
-                            }
-                        }
-                        console.log(playerInfo[player].name, playerInfo[player].x, playerInfo[player].y);
-                    }
-                }
-                console.log('nominate')
-                console.log(nominees, nominees.length);
-                console.log();
-                nominees.sort((a, b) => a[1] - b[1]);
-                // console.log(nominees[0][0]);
-                if (nominees.length != 0 && modal_load.indexOf(nominees[0][0]) == -1) {
-                    console.log('confirm');
-                    console.log(nominees[0][0]);
-                    if (modal_flag) {
-
-                        modal(nominees[0][0]);
-                        modal_flag = false;
-                    }
-                    modal_load = nominees[0][0];
-                }
-                else {
-                    modal_flag = true;
-                }
-
-            }
             try {
-                setInterval(navigation, 3000)
+                setInterval(async function () {
+                    if (navigator.geolocation) {
+                        const position = await getMyGps();
+                        currentY = position.coords.latitude;
+                        currentX = position.coords.longitude;
+                    }
+                    console.log(currentX, currentY)
+
+                    addMarker("llCurrent", currentX, currentY, 3)
+                }, 1000)
             }
             catch (e) { console.log(e) }
             console.log(first_loaded)
@@ -332,15 +132,12 @@
                                     var startPt = new Tmapv3.LatLng(feature.geometry.coordinates[j][1], feature.geometry
                                         .coordinates[j][0]);
                                     ar_line.push(startPt);
-                                    all_positions.push(startPt);
                                     pointArray.push(feature.geometry.coordinates[j]);
                                 }
-                                console.log("ASDFASDFASDF")
-                                console.log(ar_line);
                                 var polyline = new Tmapv3.Polyline({
                                     path: ar_line,
-                                    strokeColor: "#0D88FF",
-                                    strokeWeight: 3,
+                                    strokeColor: "#ff0000",
+                                    strokeWeight: 6,
                                     map: map
                                 });
                                 console.log(feature.geometry.coordinates)
@@ -353,7 +150,7 @@
 
                         ar_line = [];
                         console.log(tempX, tempY)
-                        if ((startStr == "chungmuro" || startStr == "new_engineer" || endStr == "chungmuro" || endStr == "new_engineer") && ((!(startStr == "chungmuro" && endStr == "new_engineer")) && (!(endStr == "chungmuro" && startStr == "new_engineer")))) {
+                        if ((startStr == "chungmuro" || startStr == "new_engineer") && ((!(startStr == "chungmuro" && endStr == "new_engineer")) && (!(endStr == "chungmuro" && startStr == "new_engineer")))) {
                             Pt1 = new Tmapv3.LatLng(building_coordinates['new_engineer'].y, building_coordinates['new_engineer'].x);
                             Pt2 = new Tmapv3.LatLng(building_coordinates['main_second'].y, building_coordinates['main_second'].x);
                             Pt3 = new Tmapv3.LatLng(37.558337, 126.999473);
@@ -361,28 +158,17 @@
                             Pt5 = new Tmapv3.LatLng(building_coordinates['main_elevator'].y, building_coordinates['main_elevator'].x);
                             Pt6 = new Tmapv3.LatLng(building_coordinates['main_building'].y, building_coordinates['main_building'].x);
                             ar_line.push(Pt1);
-                            all_positions.push(Pt1);
                             ar_line.push(Pt2);
-
-                            all_positions.push(Pt2);
                             ar_line.push(Pt3);
-
-                            all_positions.push(Pt3);
                             ar_line.push(Pt4);
-
-                            all_positions.push(Pt4);
                             ar_line.push(Pt5);
-
-                            all_positions.push(Pt5);
                             ar_line.push(Pt6);
-
-                            all_positions.push(Pt6);
                         }
 
                         var polyline = new Tmapv3.Polyline({
                             path: ar_line,
-                            strokeColor: "#0D88FF",
-                            strokeWeight: 3,
+                            strokeColor: "#ff0000",
+                            strokeWeight: 6,
                             map: map
                         });
                     }
@@ -397,14 +183,12 @@
                                     var startPt = new Tmapv3.LatLng(feature.geometry.coordinates[j][1], feature.geometry
                                         .coordinates[j][0]);
                                     ar_line.push(startPt);
-
-                                    all_positions.push(startPt);
                                     pointArray.push(feature.geometry.coordinates[j]);
                                 }
                                 var polyline = new Tmapv3.Polyline({
                                     path: ar_line,
-                                    strokeColor: "#0D88FF",
-                                    strokeWeight: 3,
+                                    strokeColor: "#ff0000",
+                                    strokeWeight: 6,
                                     map: map
                                 });
                                 console.log(feature.geometry.coordinates)
@@ -438,27 +222,15 @@
                         Pt5 = new Tmapv3.LatLng(37.557924, 127.001430);
                         Pt6 = new Tmapv3.LatLng(building_coordinates['hyehwa'].y, building_coordinates['hyehwa'].x);
                         ar_line.push(Pt1);
-
-                        all_positions.push(Pt1);
                         ar_line.push(Pt2);
-
-                        all_positions.push(Pt1);
                         ar_line.push(Pt3);
-
-                        all_positions.push(Pt3);
                         ar_line.push(Pt4);
-
-                        all_positions.push(Pt4);
                         ar_line.push(Pt5);
-
-                        all_positions.push(Pt5);
                         ar_line.push(Pt6);
-
-                        all_positions.push(Pt6);
                         var polyline = new Tmapv3.Polyline({
                             path: ar_line,
-                            strokeColor: "#0D88FF",
-                            strokeWeight: 3,
+                            strokeColor: "#ff0000",
+                            strokeWeight: 6,
                             map: map
                         });
 
@@ -472,19 +244,15 @@
 
                     // }
                     ar_line.push(startPt);
-
-                    all_positions.push(startPt);
                     pointArray.push([startX, startY]);
                     pointArray.push([endX, endY]);
                     ar_line.push(endPt);
-
-                    all_positions.push(endPt);
                     console.log("arline")
                     console.log(ar_line)
                     var polyline = new Tmapv3.Polyline({
                         path: ar_line,
-                        strokeColor: "#0D88FF",
-                        strokeWeight: 3,
+                        strokeColor: "#ff0000",
+                        strokeWeight: 6,
                         map: map
                     });
 
@@ -504,11 +272,9 @@
             start_x = ''
 
             var marker_start = 3;
-            console.log("infoooo")
             console.log(building_coordinates);
             for (item in building_coordinates) {
                 // 3. 경유지 심볼 찍기
-                console.log("itemmm");
                 addMarker("llPass", building_coordinates[item].x, building_coordinates[item].y, item);
                 marker_start++;
             }
@@ -516,12 +282,9 @@
             addMarker("llStart", startX, startY, startStr);
             // 도착 
             addMarker("llEnd", endX, endY, endStr);
-            async function addMarker(status, lon, lat, tag) {
+            function addMarker(status, lon, lat, tag) {
                 //출도착경유구분
                 //이미지 파일 변경.
-                console.log("tagggg");
-                console.log(tag);
-                let players;
                 var markerLayer;
                 switch (status) {
                     case "llStart":
@@ -537,38 +300,13 @@
                         imgURL =
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Location_dot_blue.svg/15px-Location_dot_blue.svg.png';
                         break;
-                    case "llCurrent_pregnant":
-                        imgURL =
-                            'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FUnl2x%2Fbtsq1FhtkRh%2Fj0fISKGyd7MwY7XcRopOfk%2Fimg.png';
-                        break;
-                    case "llCurrent_children":
-                        imgURL =
-                            'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcDXpkF%2Fbtsq1bnkXb9%2FtUnTE4LXgmUs7sa4Df5iqK%2Fimg.png';
-                        break;
-                    case "llCurrent_old":
-                        imgURL =
-                            'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FnqASI%2Fbtsq1cmhK0s%2F4IuFPpdnGeVeUWoaduJjP0%2Fimg.png';
-                        break;
-                    case "llCurrent_wheelchair":
-                        imgURL =
-                            'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1FzzW%2FbtsqYZ2SHQd%2F5hJbUkwhBmXsmyCzZERIk0%2Fimg.png';
-                        break;
                     default:
                 };
-                let append_str = '';
-                let default_str = `<a name="${tag}" class="marker" ><img name="${tag}" src='${imgURL}' width="25px" height="30px"></a>`;
-                if (status === "llCurent" || status === "llCurrent_pregnant" || status === "llCurrent_children" || status === "llCurrent_old" || status === "llCurrent_wheelchair") {
-                    append_str = `<div class="used">${tag}</div>`;
-                    default_str = `<a name="${tag}" class="current_marker" ><img name="${tag}" src='${imgURL}' width="25px" height="30px"></a>`;
-                }
-
-
-                default_str += append_str;
-                console.log(default_str);
+                console.log(tag);
                 var marker = new Tmapv3.Marker({
                     position: new Tmapv3.LatLng(lat, lon),
                     iconSize: new Tmapv3.Size(15, 15),
-                    iconHTML: default_str,
+                    iconHTML: `<a name="${tag}" class="marker" ><img name="${tag}" src='${imgURL}'></a>`,
                     icon: imgURL,
                     map: map
                 });
@@ -662,9 +400,8 @@
                     const ajaxres2 = await getAjax();
                     drawData(ajaxres2, tempX, tempY);
                 }
-            }
 
-            if (startStr == "chungmuro" || startStr == "new_engineer" || endStr == "chungmuro" || endStr == "new_engineer") {
+            } if (startStr == "chungmuro" || startStr == "new_engineer") {
 
                 // if (endGoto == "right" && startGoto == "left") {
                 //     startX = building_coordinates['new_engineer'].x;
@@ -677,20 +414,12 @@
                     endYY = building_coordinates['new_engineer'].y;
                 }
                 else if ((endGoto == "right" && startGoto == "left") && (startStr == "new_engineer" || endStr == "new_engineer")) {
-
                     startXX = building_coordinates['main_building'].x;
                     startYY = building_coordinates['main_building'].y;
                     endXX = building_coordinates['law_side'].x;
                     endYY = building_coordinates['law_side'].y;
                 }
                 else if (startStr == "new_engineer" && endStr != "chungmuro") {
-
-                    startXX = building_coordinates['main_building'].x;
-                    startYY = building_coordinates['main_building'].y;
-                    endXX = endX;
-                    endYY = endY;
-                }
-                else if (startStr == "chungmuro" && endStr == "law") {
                     startXX = building_coordinates['main_building'].x;
                     startYY = building_coordinates['main_building'].y;
                     endXX = endX;
@@ -699,13 +428,6 @@
                 else if (startStr == "hakrim" || endStr == "hakrim") {
                     startXX = building_coordinates['main_building'].x;
                     startYY = building_coordinates['main_building'].y;
-                    endXX = endX;
-                    endYY = endY;
-                }
-                else if ((startStr == "chungmuro" && endStr == "new_engineer") || (endStr == "chungmuro" && startStr == "new_engineer")) {
-
-                    startXX = startX;
-                    startYY = startY;
                     endXX = endX;
                     endYY = endY;
                 }
@@ -826,19 +548,19 @@
                         trafficDezfaultColor: "#636f63", //Default
                         trafficType1Color: "#19b95f", //원할
                         trafficType2Color: "#f15426", //지체
-                        trafficType3Color: "#ff970e" //정체		
+                        trafficType3Color: "#ff970e" //정체      
                     };
                     var style_red = {
-                        fillColor: "#0D88FF",
+                        fillColor: "#FF0000",
                         fillOpacity: 0.2,
-                        strokeColor: "#0D88FF",
+                        strokeColor: "#FF0000",
                         strokeWidth: 3,
                         strokeDashstyle: "solid",
                         pointRadius: 2,
                         title: "this is a red line"
                     };
-                    if ((!((endGoto == "right" && startGoto == "left") || (endGoto == "left" && startGoto == "right")))) {
-                        console.log("TRTRTTRR")
+                    if (!((endGoto == "right" && startGoto == "left") || (endGoto == "left" && startGoto == "right"))) {
+
                         console.log(prtcl)
                         drawData(prtcl, tempX, tempY);
 
@@ -876,7 +598,25 @@
                     function sleep(ms) {
                         return new Promise((r) => setTimeout(r, ms));
                     }
+                    async function modal(name) {
+                        console.log(building_coordinates[name])
+                        $("#modal_header").text(building_coordinates[name].str);
+                        console.log(building_coordinates[name].img)
+                        for (let item in building_coordinates[name].img) {
+                            console.log(item)
+                            await $("#modal_context").append(`<img  class="modal_img" src="${building_coordinates[name].img[item]}">`)
+                        }
+                        if (building_coordinates[name].info === undefined) {
 
+                            await $("#modal_info").append(`<div class="infomation">안내 정보를 확인할 수 없습니다.</div>`)
+
+                        }
+                        else {
+                            await $("#modal_info").append(`<div class="infomation">${building_coordinates[name].info}</div>`)
+                        }
+
+                        await $("#modal").attr("style", "display:block");
+                    }
                 },
                 error: function (request, status, error) {
                     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
@@ -885,7 +625,6 @@
             });
 
         }
-
     </script>
 </head>
 
@@ -914,24 +653,6 @@
         float: right;
     }
 
-    .current_img {
-        padding: 0;
-        width: 6rem;
-        height: 6rem;
-        vertical-align: center;
-        padding-right: 3rem;
-    }
-
-    .current_text {
-        font-size: 0.5em;
-    }
-
-    .current_info {
-        margin-left: 15%;
-        display: inline-block;
-        font-size: 1em;
-    }
-
     select {
         width: 20%;
         height: 3em;
@@ -947,17 +668,10 @@
     <nav>
 
         <ul class="menu_bar">
-            <li id="home"><a>WheelSafe</a></li>
-            <li id="account">
-                <button id="account_button">회원 정보 입력</button>
-            </li>
-
-            <li id="status" style="text-align:right">안전운전</h1>
+            <li id="home"><a></a></li>
         </ul>
     </nav>
-    <div id="desc">사진 로드에 시간이 소요될 수 있습니다.
-
-    </div>
+    <div id="desc">사진 로드에 시간이 소요될 수 있습니다.</div>
     <header>
         <div class="serach_list">
             <div id="start">
@@ -1021,44 +735,19 @@
 
         <div class="modal_content">
             <h2 id="modal_header">모달 창</h2>
+
             <p id="modal_context"></p>
+
             <p id="modal_info"></p>
             <button type="button" id="modal_close_btn">창 닫기</button>
-        </div>
-
-        <div class="modal_layer"></div>
-    </div>
-    <div id="modal_account">
-
-        <div class="modal_content">
-            <h2 id="modal_header">정보 입력</h2>
-            <div class="info_text">이름 : <input type="text" id="name_account"></div>
-            <div class="info_text">어떤 분이신가요? : <select name="account" id="select_account">
-                    <option value="wheelchair">휠체어 사용 장애인</option>
-                    <option value="old">노약자</option>
-                    <option value="pregnant">임산부</option>
-                    <option value="children">어린이</option>
-                </select>
-            </div>
-
-
-            <button type="button" id="modal_account_close_btn" onclick="icon_account()">창 닫기</button>
 
         </div>
 
         <div class="modal_layer"></div>
     </div>
+
 </body>
 <style>
-    .info_text {
-        font-size: 11px;
-    }
-
-    #account {
-        width: 200px;
-        text-align: center;
-    }
-
     #desc {
         font-size: 15px;
     }
@@ -1093,12 +782,6 @@
         margin-left: calc(100% - 100px - 10px);
     }
 
-    .used {
-        color: black;
-        font-size: 8px;
-        text-align: center;
-    }
-
     #modal .modal_content {
         width: 500px;
         margin: 100px auto;
@@ -1108,45 +791,6 @@
     }
 
     #modal .modal_layer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-    }
-
-    #modal_account {
-        display: block;
-        position: absolute;
-        top: 25%;
-        width: 100%;
-        z-index: 1;
-    }
-
-    #modal_account h2 {
-        margin: 0;
-        color: white;
-        font-size: 1.5rem;
-        text-align: center;
-    }
-
-    #modal_account button {
-        display: inline-block;
-        width: 100px;
-        margin-left: calc(100% - 100px - 10px);
-    }
-
-    #modal_account .modal_content {
-        width: 500px;
-        margin: 100px auto;
-        padding: 20px 10px;
-        background: black;
-        border: 1px solid white;
-    }
-
-    #modal_account .modal_layer {
         position: fixed;
         top: 0;
         left: 0;
@@ -1258,28 +902,14 @@
         console.log('marker clicked');
         $("#modal").attr("style", "display:block");
     });
-    $("#account_button").click(function () {
-        console.log('marker clicked');
-        $("#modal_account").attr("style", "display:block");
-    });
 
     $("#modal_close_btn").click(function () {
         $("#modal").attr("style", "display:none");
         $("#modal_header").text("");
         $("#modal_context").empty();
+
         $("#modal_info").empty();
-    });
-    $("#modal_account_close_btn").click(function () {
-
-        account_name = document.querySelector('#name_account').value;
-        if (account_name == "") {
-            alert("이름을 입력해주세요");
-        }
-        else {
-
-            $("#modal_account").attr("style", "display:none");
-        }
-    });
+    });      
 </script>
 
 </html>

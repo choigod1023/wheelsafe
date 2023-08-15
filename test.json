@@ -1,5 +1,6 @@
-{
-  "new_engineer": {
+[
+  {
+    "title": "new_engineer",
     "x": 126.998179,
     "y": 37.558282,
     "img": [
@@ -10,7 +11,8 @@
     "goto": "left",
     "info": "1F 식당, ATM, 편의점<br>3F 프린터, 자판기<br>4F 자판기<br>5F 샤워실(남자)<br>7F 샤워실(여자)"
   },
-  "hyehwa": {
+  {
+    "title": "hyehwa",
     "x": 127.001753,
     "y": 37.557555,
     "img": [
@@ -21,7 +23,8 @@
     "goto": "right",
     "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
   },
-  "law": {
+  {
+    "title": "law",
     "x": 127.000753,
     "y": 37.558171,
     "img": [
@@ -31,7 +34,8 @@
     "goto": "left",
     "info": "1F 프린터, 자판기<br>2F 편의점, 프린터, 자판기<br>3F 라운지, 샤워실(남자)"
   },
-  "law_elevator": {
+  {
+    "title": "law_elevator",
     "x": 127.001093,
     "y": 37.558154,
     "img": [
@@ -41,7 +45,8 @@
     "goto": "left",
     "info": "1F 프린터, 자판기<br>2F 편의점, 프린터, 자판기<br>3F 라운지, 샤워실(남자)"
   },
-  "wonheung_elevator": {
+  {
+    "title": "wonheung_elevator",
     "x": 126.998996,
     "y": 37.559003,
     "img": [
@@ -51,7 +56,8 @@
     "goto": "left",
     "info": "1F 자판기<br>2F 자판기<br>3F 샤워실, 편의점, 라운지, 프린터, 자판기<br>4F ATM(신한)"
   },
-  "social": {
+  {
+    "title": "social",
     "x": 127.002617,
     "y": 37.557358,
     "img": [
@@ -61,7 +67,8 @@
     "goto": "right",
     "info": "3F 자판기"
   },
-  "main_elevator": {
+  {
+    "title": "main_elevator",
     "x": 126.999358,
     "y": 37.558757,
     "img": [
@@ -70,7 +77,8 @@
     "str": "본관 엘리베이터",
     "goto": "left"
   },
-  "center_library": {
+  {
+    "title": "center_library",
     "x": 126.999328,
     "y": 37.557996,
     "img": [
@@ -80,7 +88,8 @@
     "goto": "left",
     "info": "2F 라운지<br>3F 프린터<br>4F 편의점"
   },
-  "info_p": {
+  {
+    "title": "info_p",
     "x": 126.998512,
     "y": 37.559889,
     "img": [
@@ -89,7 +98,8 @@
     "str": "정보문화관P 입구",
     "goto": "left"
   },
-  "info_q": {
+  {
+    "title": "info_q",
     "x": 126.998394,
     "y": 37.559704,
     "img": [
@@ -99,7 +109,8 @@
     "str": "정보문화관Q 입구",
     "goto": "left"
   },
-  "social_base_first": {
+  {
+    "title": "social_base_first",
     "x": 127.002688,
     "y": 37.55741,
     "img": [
@@ -110,7 +121,8 @@
     "goto": "right",
     "info": "3F 자판기"
   },
-  "hyehwa_bridge_side": {
+  {
+    "title": "hyehwa_bridge_side",
     "x": 127.001083,
     "y": 37.557648,
     "img": [
@@ -120,7 +132,8 @@
     "goto": "right",
     "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
   },
-  "jeonggak_side": {
+  {
+    "title": "jeonggak_side",
     "x": 127.000603,
     "y": 37.557424,
     "img": [
@@ -130,7 +143,8 @@
     "str": "정각원 옆 길",
     "goto": "left"
   },
-  "info_p_elevator": {
+  {
+    "title": "info_p_elevator",
     "x": 126.998523,
     "y": 37.559407,
     "img": [
@@ -139,14 +153,16 @@
     "str": "정보문화관P 엘리베이터",
     "goto": "left"
   },
-  "chungmuro": {
+  {
+    "title": "chungmuro",
     "x": 126.993429,
     "y": 37.561328,
     "img": [],
     "str": "충무로역 엘리베이터",
     "goto": "left"
   },
-  "dongguk_sta": {
+  {
+    "title": "dongguk_sta",
     "x": 127.005086,
     "y": 37.558903,
     "img": [
@@ -156,7 +172,8 @@
     "str": "동대입구역 엘리베이터",
     "goto": "right"
   },
-  "pal_road": {
+  {
+    "title": "pal_road",
     "x": 127.000195,
     "y": 37.558283,
     "img": [
@@ -165,7 +182,8 @@
     "str": "팔정도",
     "goto": "left"
   },
-  "hakrim": {
+  {
+    "title": "hakrim",
     "x": 126.999828,
     "y": 37.560197,
     "img": [],
@@ -173,7 +191,8 @@
     "goto": "left",
     "info": "B1 편의점<br>1F 라운지, ATM(신한), 프린터<br>2F 자판기, 프린터<br>4F 자판기"
   },
-  "culture": {
+  {
+    "title": "culture",
     "x": 127.002956,
     "y": 37.557804,
     "img": [
@@ -184,7 +203,8 @@
     "goto": "right",
     "info": "B1 식당, 카페<br>1F 자판기, 프린터, 편의점<br>3F 자판기"
   },
-  "haksul": {
+  {
+    "title": "haksul",
     "x": 127.003461,
     "y": 37.557862,
     "img": [
@@ -195,7 +215,8 @@
     "goto": "right",
     "info": "B1 카페<br>1F 프린터<br>3F 자판기"
   },
-  "business": {
+  {
+    "title": "business",
     "x": 127.002805,
     "y": 37.557254,
     "img": [
@@ -205,7 +226,8 @@
     "goto": "right",
     "info": "1F 자판기, 라운지<br>2F 자판기, 프린터, 라운지<br>6F 하늘마루"
   },
-  "myeongjin": {
+  {
+    "title": "myeongjin",
     "x": 127.000029,
     "y": 37.557973,
     "img": [],
@@ -213,7 +235,8 @@
     "goto": "left",
     "info": "1F 자판기, 프린터, 라운지"
   },
-  "sangrokwon": {
+  {
+    "title": "sangrokwon",
     "x": 126.999311,
     "y": 37.557175,
     "img": [
@@ -224,14 +247,16 @@
     "goto": "left",
     "info": "1F 버거킹, 솥앤누들, 분식, 편의점<br>2F 학생식당<br>3F 교직원식당"
   },
-  "playground": {
+  {
+    "title": "playground",
     "x": 127.000453,
     "y": 37.557028,
     "img": [],
     "str": "대운동장 경사로",
     "goto": "left"
   },
-  "leehaerang": {
+  {
+    "title": "leehaerang",
     "x": 127.00353,
     "y": 37.558536,
     "img": [
@@ -240,7 +265,8 @@
     "str": "이해랑예술극장",
     "goto": "right"
   },
-  "main_building": {
+  {
+    "title": "main_building",
     "x": 126.999853,
     "y": 37.558772,
     "img": [
@@ -249,7 +275,8 @@
     "str": "본관 3층 경사로",
     "goto": "left"
   },
-  "main_second": {
+  {
+    "title": "main_second",
     "x": 126.999147,
     "y": 37.558366,
     "img": [
@@ -258,7 +285,8 @@
     "str": "본관 2층 쪽문",
     "goto": "left"
   },
-  "new_engineer_first": {
+  {
+    "title": "new_engineer_first",
     "x": 126.997953,
     "y": 37.558374,
     "img": [
@@ -268,7 +296,8 @@
     "goto": "left",
     "info": "1F 식당, ATM, 편의점<br>3F 프린터, 자판기<br>4F 자판기<br>5F 샤워실(남자)<br>7F 샤워실(여자)<br>"
   },
-  "hyehwa_side": {
+  {
+    "title": "hyehwa_side",
     "x": 127.001396,
     "y": 37.557883,
     "img": [
@@ -279,7 +308,8 @@
     "goto": "right",
     "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
   },
-  "law_side": {
+  {
+    "title": "law_side",
     "x": 127.000731,
     "y": 37.558529,
     "img": [
@@ -289,7 +319,8 @@
     "goto": "left",
     "info": "1F 프린터, 자판기<br>2F 편의점, 프린터, 자판기<br>3F 라운지, 샤워실(남자)"
   },
-  "hyehwa_first": {
+  {
+    "title": "hyehwa_first",
     "x": 127.002041,
     "y": 37.557606,
     "img": [
@@ -300,7 +331,8 @@
     "goto": "right",
     "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
   },
-  "social_third": {
+  {
+    "title": "social_third",
     "x": 127.002419,
     "y": 37.557469,
     "img": [
@@ -310,7 +342,8 @@
     "goto": "right",
     "info": "3F 자판기"
   },
-  "business_second": {
+  {
+    "title": "business_second",
     "x": 127.002815,
     "y": 37.557134,
     "img": [
@@ -319,7 +352,8 @@
     "str": "경영관 2층 입구 경사로",
     "goto": "right"
   },
-  "social_second": {
+  {
+    "title": "social_second",
     "x": 127.002442,
     "y": 37.557249,
     "img": [
@@ -329,7 +363,8 @@
     "goto": "right",
     "info": "3F 자판기"
   },
-  "wonheung": {
+  {
+    "title": "wonheung",
     "x": 126.999167,
     "y": 37.558807,
     "img": [
@@ -339,7 +374,8 @@
     "goto": "left",
     "info": "1F 자판기<br>2F 자판기<br>3F 샤워실, 편의점, 라운지, 프린터, 자판기<br>4F ATM(신한)"
   },
-  "hyehwa_bridge": {
+  {
+    "title": "hyehwa_bridge",
     "x": 127.001379,
     "y": 37.557747,
     "img": [
@@ -349,4 +385,4 @@
     "goto": "right",
     "info": "1F 자판기, 프린터, 국민은행, ATM(국민)<br>2F 라운지<br>4F 편의점"
   }
-}
+]

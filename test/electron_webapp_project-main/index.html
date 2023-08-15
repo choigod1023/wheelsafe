@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Nanum Gothic', sans-serif;
+      margin: 3rem;
+    }
+
+    #clocks {
+      font-size: 5rem;
+      padding-bottom: 2rem;
+      padding-top: 2rem;
+    }
+
+    #day {
+      font-size: 2.5rem;
+    }
+
+    span {
+      font-size: 3rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    ul {
+      padding: 0;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    #clock {
+      width: 500px;
+      text-align: right;
+    }
+
+    #forecast {
+      font-size: 1rem;
+      display: inline-block;
+    }
+
+    #forecast_hour,
+    #forecast_temp,
+    #forecast_cloud {
+      text-align: center;
+    }
+
+    #forecast>div {
+      padding: 0.5rem;
+    }
+
+    #forecast_img {
+      width: 3.5rem;
+      height: 3.5rem;
+      padding-top: 1rem;
+      padding-left: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    #current_img {
+      width: 8rem;
+      height: 8rem;
+      vertical-align: center;
+      padding-right: 3rem;
+    }
+
+    #current {
+      display: flex
+    }
+
+    #stock_rate {
+      font-size: 2rem;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+</head>
+
+<body>
+  <header>
+    <span id="weather">
+      <span id="current"></span>
+      <ul id="hours"></ul>
+    </span>
+    <span id="clock">
+      <span id="stock_name"></span>
+      <span id="stock_rate"></span>
+    </span>
+  </header>
+  <!-- You can also require other files to run in this process -->
+  <script src="./renderer.js"></script>
+</body>
+
+</html>

@@ -14,7 +14,8 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 # Send a ping to confirm a successful connection
 mydb = client['wheelsafe']
 mycol = mydb['wheelsafe']
-
+mycol2 = mydb['wheel']
+mycol3 = mydb['myplayer']
 x = mycol.find()[0]
 print(type(x))
 
@@ -31,9 +32,49 @@ def arduino():
     return parameters
 
 
+@app.route('/use')
+def used():
+    parameter = request.args.to_dict()
+    if len(parameter) == 0:
+        return 'No parameter'
+    parameters = ''
+    x = request.args['x']
+    y = request.args['y']
+    name = request.args['name']
+    mycol3.update_one({"name": name}, {"$set": {"x": x, "y": y}})
+    return {"x": x, "y": y, "name": name}
+
+
+@app.route('/players')
+def use_players():
+    try:
+        response = mycol3.find()
+        return json.loads(json_util.dumps(response))
+    except:
+        return {"done": 0}
+
+
+@app.route('/register')
+def register():
+    parameter = request.args.to_dict()
+    if len(parameter) == 0:
+        return 'No parameter'
+    parameters = ''
+    name = request.args['name']
+    vulnerablility = request.args['vul']
+    print(name, vulnerablility)
+    find = mycol3.find_one({"name": name})
+    print(find)
+    if(find == None):
+        mycol3.insert_one(
+            {"name": name, "vulnerability": vulnerablility})
+        return {"done": 1}
+    else:
+        return {"done": 0}
+
+
 @app.route('/marker')
 def show_marker():
-
     return json.loads(json_util.dumps(x))
 
 
